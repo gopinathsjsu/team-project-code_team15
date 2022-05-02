@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+const bookingsRouter=require('./Routes/BookingsRoutes')
 app.get('/', function (req, res) {
   res.send('Welcome to Hotel Reservation Backend API');
 });
@@ -26,3 +27,5 @@ conn.connect((err) => {
 app.listen(3001, function () {
   console.log('Server Listening on port 3000');
 });
+
+app.use('/bookings',bookingsRouter)

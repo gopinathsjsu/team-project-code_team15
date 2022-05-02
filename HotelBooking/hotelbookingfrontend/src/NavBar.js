@@ -39,6 +39,7 @@ export default function NavBar() {
         <Button variant="outline-success">Search</Button>
       </Form> */}
       <a className='d-flex' style={{"cursor":"pointer"}}>Sign In</a>
+      <a className='d-flex' style={{"cursor":"pointer"}}>Bookings</a>
     </Navbar.Collapse>
   </Container>
 </Navbar>
