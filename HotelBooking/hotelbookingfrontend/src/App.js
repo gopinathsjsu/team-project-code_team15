@@ -9,6 +9,7 @@ import {
 import HotelLogin from './Components/HotelLogin'
 import HomePage from './Components/HomePage'
 import ManageBookings from './Components/ManageBookings';
+import CustProfile from './Components/CustProfile';
 import HotelLandingPage from './Components/HotelComponents/HotelLandingPage';
 
 
