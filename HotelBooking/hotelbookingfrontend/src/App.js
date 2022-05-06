@@ -12,6 +12,7 @@ import {
 import HotelLogin from './Components/HotelLogin'
 import HomePage from './Components/HomePage'
 import ManageBookings from './Components/ManageBookings';
+import CustProfile from './Components/CustProfile';
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} ></Route>
           <Route exact path="/Login" element={<HotelLogin></HotelLogin>}></Route>
-          <Route exact path="/Bookings" element={<ManageBookings></ManageBookings>}></Route> 
+          <Route exact path="/Bookings" element={<ManageBookings></ManageBookings>}></Route>
+          <Route exact path = '/CustProfile' element = {<CustProfile></CustProfile>}></Route> 
         </Routes>
       </Router>
     </div>
