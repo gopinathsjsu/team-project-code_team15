@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       <Router>
           <Switch>
-          <Route path="/" ><HomePage></HomePage></Route>
+          <Route exact path="/" ><HomePage></HomePage></Route>
           <Route exact path="/Login" ><HotelLogin></HotelLogin></Route>
           <Route exact path="/Bookings" ><ManageBookings></ManageBookings></Route> 
           <Route exact path="/landing" ><HotelLandingPage></HotelLandingPage></Route>
