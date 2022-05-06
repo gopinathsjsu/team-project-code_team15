@@ -4,15 +4,13 @@ import NavBar from './NavBar';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams, Navigate, Routes
+  Route
 } from "react-router-dom";
 import HotelLogin from './Components/HotelLogin'
 import HomePage from './Components/HomePage'
 import ManageBookings from './Components/ManageBookings';
 import CustProfile from './Components/CustProfile';
+import HotelLandingPage from './Components/HotelComponents/HotelLandingPage';
 
 
 function App() {
@@ -20,12 +18,12 @@ function App() {
 
     <div className="App">
       <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} ></Route>
-          <Route exact path="/Login" element={<HotelLogin></HotelLogin>}></Route>
-          <Route exact path="/Bookings" element={<ManageBookings></ManageBookings>}></Route>
-          <Route exact path = '/CustProfile' element = {<CustProfile></CustProfile>}></Route> 
-        </Routes>
+          <Switch>
+          <Route exact path="/" ><HomePage></HomePage></Route>
+          <Route exact path="/Login" ><HotelLogin></HotelLogin></Route>
+          <Route exact path="/Bookings" ><ManageBookings></ManageBookings></Route> 
+          <Route exact path="/landing" ><HotelLandingPage></HotelLandingPage></Route>
+          </Switch>
       </Router>
     </div>
 
