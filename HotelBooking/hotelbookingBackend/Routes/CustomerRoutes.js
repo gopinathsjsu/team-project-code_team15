@@ -9,7 +9,7 @@ router.post("/getPricing",async(req,res)=>{
         let getBasePriceQuery= `select basePrice from Rooms where roomID=? `;
         let basePrice=await pool.query(getBasePriceQuery,[hotelId[i]]);
         basePrice=basePrice[0]
-        console.log(basePrice.)
+        console.log(basePrice)
         let price=0;
         price+=getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut);
         finalPrice.push({roomId:roomIds[1],price:price})
