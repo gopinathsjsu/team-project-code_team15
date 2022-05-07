@@ -8,21 +8,30 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import HotelCards from './HotelCards';
-
-
+import HotelDialog from './HotelDialog';
+import axios from 'axios'
 
 
 export default class HomePage extends Component {
 
    
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       numberOfRooms:2
+    }
+  }
 
 
 
 
   loadHotels = ()=>{
-
-      return testdata.map((item,key)=>{
-         return <li style={{"marginBottom":"20px"}}><HotelCards item = {item} key = {key}></HotelCards></li>
+     
+       let hotelList =testdata.groupedHotel 
+       console.log(hotelList)
+      return hotelList.map((item,key)=>{
+         return <li style={{"marginBottom":"20px"}}><HotelCards item = {item[0]} key = {key} rooms = {item}></HotelCards></li>
       })
 
   }
@@ -35,15 +44,15 @@ export default class HomePage extends Component {
         <NavBar></NavBar>
         <div className='container-fluid' style={{"margin":"0px","padding":"0px"}}>
           <div className='row d-flex justify-content-center' style={{"marginTop":"50px","marginLeft":"0px","marginRight":"0px"}}>
-            <div className='col-md-2'>
+            <div className='col-md-1'>
 
             </div>
-            <div className='col-md-8 d-flex justify-content-center'> 
+            <div className='col-md-10 d-flex justify-content-center'> 
               <center>
               <div class="input-group">
               
                 <div class="form-outline">
-                  <input type="search" id="form1" class="form-control" style={{"width":"300px"}}/>
+                  <input type="search" placeholder='Location' id="form1" class="form-control" style={{"width":"300px"}}/>
                   <label class="form-label" for="form1">Search</label>
                 </div>
                 <div>
@@ -54,6 +63,28 @@ export default class HomePage extends Component {
                 <input type="date" style={{"height":'39px','marginLeft':"10px" , "display":"block"}}></input>
                 <label class="form-label" for="C1">Check Out</label>
                 </div>
+                <div>
+                  <select name='Room_Type' style={{"height":'39px','width':'120px' ,'marginLeft':"10px","display":"block"}}>
+                   <option value="Single">
+                     Single
+                   </option>
+                   <option value="double">
+                   double
+                  </option>
+                   <option value="suite">
+                   suite
+                   </option>
+                  </select>
+                  <label class="form-label" for="Room_Type">Room Type</label>
+                </div>
+                <div>
+                 <input type="number" name='Quantity' style={{"height":'39px','width':'100px' ,'marginLeft':"10px","display":"block"}}></input>
+                 <label class="form-label" for="Room_Type">Number of Guests</label>
+                </div>
+                <div>
+                 <input type="number" name='Rooms' style={{"height":'39px','width':'100px' ,'marginLeft':"13px","display":"block"}}></input>
+                 <label class="form-label" for="Room_Type" style={{"marginLeft":"5px"}}>Number of Rooms</label>
+                </div>
                 <button type="button" class="btn btn-primary" style={{"height":'39px',"marginLeft":"10px","width":"100px"}}>
                   Search
                   {/* <i class="fas fa-search"></i> */}
@@ -62,7 +93,7 @@ export default class HomePage extends Component {
               </center>
 
             </div>
-            <div className='col-md-2'>
+            <div className='col-md-1'>
 
             </div>
 
