@@ -16,8 +16,10 @@ router.post("/getPricing",async(req,res)=>{
         basePrice=basePrice * (diffDays)
         let price=basePrice;
         price+=getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut);
-        // price+=getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut);
-        // price+=getPricingBasedOnCustomerLoyalty(basePrice,custId);
+        price+=getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut);
+        price+=getPricingBasedOnAmenities(diffDays,breakfast,fitnessRoom,swimmingPool,parking,allMeals)
+        price+=getPricingBasedOnCustomerLoyalty(basePrice,custId);
+        
         finalPrice.push({roomId:roomId,price:price})
     // }
     res.send(finalPrice)
@@ -38,14 +40,42 @@ router.post("/getPricing",async(req,res)=>{
 function getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut) {
     let increment=0;
     if(isWeekend(checkIn,checkOut)){
-        increment=basePrice*0.30;
+        increment=basePrice*0.20;
     }else{
-        increment=basePrice*0.15;
+        increment=basePrice*0.05;
     }
     return increment
 }
 function getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut){
     let increment=0;
-
+    /**Summer holiday season */
+    if(checkIn.getMonth() in [5,6] || checkOut.getMonth() in [5,6]){
+        increment+=basePrice*0.15;
+    /**Thanksgiving and christmas season */
+    if((checkIn.getDate()>=20 && checkIn.getMonth()==11) || checkIn.getMonth() ==12)
+        increment+=basePrice*0.25;
+    }
+    return increment;
+}
+function getPricingBasedOnAmenities(diffDays,breakfast,fitnessRoom,swimmingPool,parking,allMeals){
+    let increment=0;
+    if(breakfast===true)
+        increment+=diffDays*4;
+    if(fitnessRoom===true)
+        increment+=diffDays*3;
+    if(swimmingPool===true)
+        increment+=diffDays*3;
+    if(parking===true)
+        increment+=diffDays*2;
+    if(allMeals===true)
+        increment+=diffDays*8;
+    return increment;
+}
+function getPricingBasedOnCustomerLoyalty(basePrice,custId){
+    let decrement=0;
+    /**
+     * Get rewards points from table and do if else for some range and provide discount based on it
+     */
+    return decrement;
 }
 module.exports=router
