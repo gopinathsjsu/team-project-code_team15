@@ -23,6 +23,22 @@ export default class HomePage extends Component {
     }
   }
 
+  componentDidMount(props){
+
+    axios.post("http://localhost:3001/search",{
+      location: "san ",
+      checkin:"05/10/2022",
+      checkout:"05/17/2022",
+      roomType:"single",
+      noOfRooms:2,
+      noOfGuests:4
+  }).then(resp=>{
+    console.log(resp)
+  }).catch(err=>{
+    console.log(err)
+  })
+
+  }
 
 
 

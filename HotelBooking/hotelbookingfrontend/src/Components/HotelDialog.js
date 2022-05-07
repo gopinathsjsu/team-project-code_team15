@@ -72,7 +72,7 @@ export default function HotelDialog(props) {
     const handleParentClose = () => {
         props.closeDialog()
     }
-    const onCheckHandler = (e)=>{
+    const onNoneChecked = (e)=>{
      console.log(e.target.value)
     }
 
@@ -102,7 +102,7 @@ export default function HotelDialog(props) {
                     <Typography gutterBottom>
                         <label for ="options">Select additional Eminities</label>
                         <FormGroup name = "options"  >
-                            <FormControlLabel onClick={(e)=>{onCheckHandler(e)}} control={<Checkbox defaultChecked value="None" />} label="None" />
+                            <FormControlLabel onClick={(e)=>{onNoneChecked(e)}} control={<Checkbox defaultChecked value="None" />} label="None" />
                             <FormControlLabel  control={<Checkbox value="Daily Continental Breakfast"/>} label="Daily Continental Breakfast"/>
                             <FormControlLabel  control={<Checkbox value="Access to fitness room"/>} label="Access to fitness room"/>
                             <FormControlLabel  control={<Checkbox value="Daily Parking"/>} label="Daily Parking"/>
