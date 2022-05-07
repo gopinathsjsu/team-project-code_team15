@@ -2,20 +2,24 @@ var express = require('express');
 var router = express.Router();
 var pool = require('./../Database/db')
 router.post("/getPricing",async(req,res)=>{
-    let {custId,hotelId,roomIds,checkIn,checkOut,breakfast,fitnessRoom,swimmingPool,parking,allMeals}=req.body;
+    let {custId,hotelId,roomId,checkIn,checkOut,breakfast,fitnessRoom,swimmingPool,parking,allMeals}=req.body;
     let finalPrice=[];
     
-    for(let i=0;i<roomIds.length;i++){
-        let getBasePriceQuery= `select basePrice from Rooms where roomID=? `;
-        let basePrice=await pool.query(getBasePriceQuery,[hotelId[i]]);
-        basePrice=basePrice[0]
+    // for(let i=0;i<roomIds.length;i++){
+        let getBasePriceQuery= `select basePrice from Rooms where roomID=? and hotelId=? `;
+        let result=await pool.query(getBasePriceQuery,[roomId,hotelId]);
+        let basePrice=await result[0][0]?.basePrice
         console.log(basePrice)
-        let price=0;
+        checkIn=new Date(checkIn);
+        checkOut=new Date(checkOut);
+        const diffDays = Math.ceil((checkOut-checkIn) / (1000 * 60 * 60 * 24)); 
+        basePrice=basePrice * (diffDays)
+        let price=basePrice;
         price+=getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut);
-        finalPrice.push({roomId:roomIds[1],price:price})
         // price+=getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut);
         // price+=getPricingBasedOnCustomerLoyalty(basePrice,custId);
-    }
+        finalPrice.push({roomId:roomId,price:price})
+    // }
     res.send(finalPrice)
 });
  function isWeekend(date1, date2) {
@@ -36,7 +40,12 @@ function getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut) {
     if(isWeekend(checkIn,checkOut)){
         increment=basePrice*0.30;
     }else{
-        increment=basePrice*15;
+        increment=basePrice*0.15;
     }
+    return increment
+}
+function getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut){
+    let increment=0;
+
 }
 module.exports=router
