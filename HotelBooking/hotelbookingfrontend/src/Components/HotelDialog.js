@@ -60,7 +60,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function HotelDialog(props) {
     const [open, setOpen] = React.useState(props.popen);
-    console.log("heyy")
+    console.log(props)
     // const CheckBoxNone
 
     const handleClickOpen = () => {
@@ -76,7 +76,10 @@ export default function HotelDialog(props) {
     const onNoneChecked = (e)=>{
      console.log(e.target.value)
     }
-
+   const onCheckBoxChange = (e)=>{
+       console.log(e.target)
+       console.log(e.target.values)
+   }
 
     return (
         <div>
@@ -91,8 +94,8 @@ export default function HotelDialog(props) {
 
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleParentClose}>
-                    <center>Avalon on the Alameda</center>
-                    <center><h6>San Jose</h6></center>
+                    <center>{props.item.hotelName}</center>
+                    <center><h6>{props.item.city}</h6></center>
                 </BootstrapDialogTitle>
                 <DialogContent dividers style={{ "height": "400px", "width": "800px" }}>
                     <Typography gutterBottom align='center' >
@@ -102,8 +105,8 @@ export default function HotelDialog(props) {
                     
                     </Typography>
                     <Typography gutterBottom>
-                        <label for ="options">Select additional Eminities</label>
-                        <FormGroup name = "options"  >
+                        <label for ="options">Select additional Eminities for all the rooms</label>
+                        <FormGroup name = "options" onChange={(e)=>onCheckBoxChange(e)} >
                             <FormControlLabel onClick={(e)=>{onNoneChecked(e)}} control={<Checkbox defaultChecked value="None" />} label="None" />
                             <FormControlLabel  control={<Checkbox value="Daily Continental Breakfast"/>} label="Daily Continental Breakfast"/>
                             <FormControlLabel  control={<Checkbox value="Access to fitness room"/>} label="Access to fitness room"/>
