@@ -1,4 +1,5 @@
 var pool = require('./../Database/db')
+const _ = require("lodash"); 
 class searchHandler{
     setNextObj(nextObj){}
     validate(req,res){
@@ -74,7 +75,13 @@ class RoomsAndGuestNoIsValid extends searchHandler{
             (select roomId from Reservations where STR_TO_DATE(?,'%m/%d/%Y') < STR_TO_DATE(checkOutDate,'%m/%d/%Y') and STR_TO_DATE(?,'%m/%d/%Y')> STR_TO_DATE(checkInDate,'%m/%d/%Y'))) as t2 on t1.hotelId= t2.hotelId where t1.city like ? and t2.roomType=? ;
             `
         let result=await pool.query(searchForRooms,[checkin,checkout,'%'+location+'%',roomType]);
-        res.status(200).send(result[0])
+        let groupedResult=_.groupBy(result[0],(n)=> n.hotelId)
+        let groupedHotel=[]
+        for(const key in groupedResult){
+            if(groupedResult[key].length>=noOfRooms)
+                groupedHotel.push(groupedResult[key])
+        }
+        res.status(200).send({groupedHotel})
     }
 }
 module.exports={processSearch,checkIfDatesAreValid,RoomsAndGuestNoIsValid}

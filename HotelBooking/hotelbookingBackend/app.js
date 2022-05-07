@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require('body-parser')
 const bookingsRouter=require('./Routes/BookingsRoutes')
 const search=require("./Routes/Search")
-
+const customerRouter= require("./Routes/CustomerRoutes")
 
 // support parsing of application/json type post data
 app.use(bodyParser.json());
@@ -37,6 +37,6 @@ app.get('/', function (req, res) {
 app.listen(3001, function () {
   console.log('Server Listening on port 3000');
 });
-
+app.use("/customer",customerRouter)
 app.use('/bookings',bookingsRouter)
 app.use('/search',search)
