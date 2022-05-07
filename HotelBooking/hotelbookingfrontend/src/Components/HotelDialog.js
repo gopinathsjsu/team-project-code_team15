@@ -61,6 +61,7 @@ BootstrapDialogTitle.propTypes = {
 export default function HotelDialog(props) {
     const [open, setOpen] = React.useState(props.popen);
     console.log("heyy")
+    // const CheckBoxNone
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -75,6 +76,7 @@ export default function HotelDialog(props) {
     const onNoneChecked = (e)=>{
      console.log(e.target.value)
     }
+
 
     return (
         <div>
