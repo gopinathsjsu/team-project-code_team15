@@ -18,7 +18,7 @@ class checkIfDatesAreValid extends searchHandler{
         let checkIn=new Date(req.body.checkin);
         let checkOut=new Date(req.body.checkout)
         const diffDays = Math.ceil((checkOut-checkIn) / (1000 * 60 * 60 * 24)); 
-        let isValid= (checkIn<checkOut && (diffDays<=7))
+        let isValid= (checkIn<checkOut && (diffDays<=7) && checkIn>new Date())
         console.log(diffDays)
         if(isValid){
             this.nextObj.validate(req,res);
