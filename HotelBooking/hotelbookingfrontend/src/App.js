@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import HotelLogin from './Components/HotelLogin'
 import HomePage from './Components/HomePage'
-
+import HotelRegistration from './Components/HotelRegistration'
 
 function App() {
   return (
@@ -23,6 +23,9 @@ function App() {
 
           </Route>
           <Route exact path="/Login" element={<HotelLogin></HotelLogin>}>
+          </Route>
+          <Route path="/Register" element={<HotelRegistration />} >
+
           </Route>
         </Routes>
       </Router>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom';
 import NavBar from '../NavBar'
 
 export default class HotelLogin extends Component {
@@ -9,6 +10,7 @@ export default class HotelLogin extends Component {
     return (
       <div>
         <NavBar></NavBar>
+        {/* <div className='img'> */}
         <div className='container-fluid' style={this.standardStyle}>
           <div className='row'>
             <div className='col-md-2'></div>
@@ -37,7 +39,7 @@ export default class HotelLogin extends Component {
 
 <div class="text-center">
     <p>Not a member?
-        <a href="">Register</a>
+        <a href="/Register">Register</a>
     </p>
 
 
@@ -47,6 +49,7 @@ export default class HotelLogin extends Component {
             <div className='col-md-2'></div>
           </div>
         </div>
+        {/* </div> */}
         {/* <h5>        
           HotelLogin
         </h5>     */}

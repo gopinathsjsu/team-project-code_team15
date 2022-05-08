@@ -38,7 +38,7 @@ export default function NavBar() {
         />
         <Button variant="outline-success">Search</Button>
       </Form> */}
-      <a className='d-flex' style={{"cursor":"pointer"}}>Sign In</a>
+      <a href="/Login"  className='d-flex' style={{"cursor":"pointer"}}>Sign In</a>
     </Navbar.Collapse>
   </Container>
 </Navbar>
