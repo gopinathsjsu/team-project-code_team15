@@ -57,11 +57,12 @@ function getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut) {
 function getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut){
     let increment=0;
     /**Summer holiday season */
-    if(checkIn.getMonth() in [5,6] || checkOut.getMonth() in [5,6]){
+    if([4,5,6].includes(checkIn.getMonth()) || [4,5,6].includes(checkOut.getMonth())){
         increment+=basePrice*0.15;
     /**Thanksgiving and christmas season */
-    if((checkIn.getDate()>=20 && checkIn.getMonth()==11) || checkIn.getMonth() ==12)
+    if((checkIn.getDate()>=20 && checkIn.getMonth()==10) || checkIn.getMonth() ==11){
         increment+=basePrice*0.25;
+    }
     }
     return increment;
 }
