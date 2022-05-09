@@ -13,6 +13,7 @@ import CustProfile from './Components/CustProfile';
 import HotelLandingPage from './Components/HotelComponents/HotelLandingPage';
 import CheckOutPage from './Components/CheckOutPage';
 
+import HotelRegistration from './Components/HotelRegistration'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Switch>
           <Route exact path="/" ><HomePage></HomePage></Route>
           <Route exact path="/Login" ><HotelLogin></HotelLogin></Route>
+          <Route path="/Register" element={<HotelRegistration />} ></Route>
           <Route exact path="/Bookings" ><ManageBookings></ManageBookings></Route> 
           <Route exact path="/landing" ><HotelLandingPage></HotelLandingPage></Route>
           <Route exact path = "/Checkout"component = {CheckOutPage} ></Route>

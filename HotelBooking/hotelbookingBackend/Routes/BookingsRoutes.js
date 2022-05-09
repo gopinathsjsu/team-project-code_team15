@@ -56,7 +56,49 @@ router.post("/",async(req,res)=>{
 /**
  * To make changes to exisisting booking of a customer with cust id and booking id input
  */
-router.put("/:custId/:bookingId",(req,res)=>{
+router.put("/",async (req,res)=>{
+    let {custId,reservationId,newCheckIn,newCheckOut}=req.body
+    let result=await pool.query(`select checkInDate,checkOutDate from Reservations where reservationId=?;`,[reservationId]);
+    let {checkInDate,checkOutDate}=result[0][0]||{};
+    //Storing string dates
+    newCheckInStr=newCheckIn;
+    newCheckOutStr=newCheckOut;
+    checkInStr=checkInDate;
+    checkOutStr=checkOutDate;
+    //Convert strings to dates
+    newCheckIn=new Date(newCheckIn);
+    newCheckOut=new Date(newCheckOut);
+    checkInDate=new Date(checkInDate);
+    checkOutDate=new Date(checkOutDate);
+    //check if dates overlap
+    let isOverlap= (checkInDate<newCheckOut) && (newCheckIn<checkOutDate);
+    console.log(isOverlap);
+    let intervalsToCheck=[];
+    if(isOverlap){
+        if((newCheckIn-checkInDate)<0 ){
+            intervalsToCheck.push({
+                start:newCheckIn,
+                end:checkInDate
+            })
+        }
+        if((newCheckOut-checkOutDate)>0){
+            intervalsToCheck.push({
+                start:checkOutDate,
+                end:newCheckOut
+            })
+        }
+    }
+    if(isOverlap && intervalsToCheck.length==0){
+        console.log("new checkin and checout dates can be booked for the same room by updating existing rows")
+        let updatetimings=`update Reservations set checkInDate=?,checkOutDate=? where reservationid=?`
+    }
+    if(isOverlap && intervalsToCheck.length>0){
+        console.log("check the availability for these intervals for this roomId and if available make reservation by updating dates")
+    }
+    if(!isOverlap){
+        console.log("check the availability for the newCheckin and checkOut and make a new reservation")
+    }
+    res.send(intervalsToCheck);
 
 })
 /**

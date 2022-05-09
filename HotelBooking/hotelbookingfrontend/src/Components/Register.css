@@ -1,0 +1,40 @@
+body{
+    background: #bdc3c7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #504b2c, #c8d1d3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #5b4e29, #c6cebaec); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.form{
+    background-color: transparent;
+    border-radius: 5px;
+    width: 650px;
+    margin: 20px auto;
+    padding: 20px;
+    height: 520px;
+}
+
+.form-body{
+    text-align: left;
+    padding: 20px 10px;
+}
+
+.form-body > *{
+    padding: 5px;
+}
+
+.form__label{
+    width: 40%;
+}
+
+.form_input{
+    width: 60%;
+}
+
+.footer{
+    text-align: center;
+}
+.img{
+    background-image: url("../background.jpg");
+    background-size: 1900px;
+}

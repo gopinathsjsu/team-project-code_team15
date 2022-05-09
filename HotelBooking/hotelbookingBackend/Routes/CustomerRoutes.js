@@ -15,14 +15,22 @@ router.post("/getPricing",async(req,res)=>{
         const diffDays = Math.ceil((checkOut-checkIn) / (1000 * 60 * 60 * 24)); 
         basePrice=basePrice * (diffDays)
         let price=basePrice;
-        price+=getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut);
-        price+=getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut);
-        price+=getPricingBasedOnAmenities(diffDays,breakfast,fitnessRoom,swimmingPool,parking,allMeals)
-        price+=getPricingBasedOnCustomerLoyalty(basePrice,custId);
         
-        finalPrice.push({roomId:roomId,price:price})
+        let weekendPrice=getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut);
+        let holidaySeasonPrice=getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut);
+        let amenitiesPrice=getPricingBasedOnAmenities(diffDays,breakfast,fitnessRoom,swimmingPool,parking,allMeals)
+        price+=amenitiesPrice+holidaySeasonPrice+weekendPrice;
+        // price+=getPricingBasedOnCustomerLoyalty(basePrice,custId);
+        
+        finalPrice.push({roomId:roomId,basePrice,totalPrice:price})
     // }
-    res.send(finalPrice)
+    res.send({
+        roomId:roomId,
+        basePrice,
+        weekendPrice,
+        holidaySeasonPrice,
+        amenitiesPrice,
+        totalPrice:price})
 });
  function isWeekend(date1, date2) {
     var d1 = new Date(date1),
@@ -40,7 +48,7 @@ router.post("/getPricing",async(req,res)=>{
 function getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut) {
     let increment=0;
     if(isWeekend(checkIn,checkOut)){
-        increment=basePrice*0.20;
+        increment=basePrice*0.10;
     }else{
         increment=basePrice*0.05;
     }
@@ -49,11 +57,12 @@ function getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut) {
 function getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut){
     let increment=0;
     /**Summer holiday season */
-    if(checkIn.getMonth() in [5,6] || checkOut.getMonth() in [5,6]){
+    if([4,5,6].includes(checkIn.getMonth()) || [4,5,6].includes(checkOut.getMonth())){
         increment+=basePrice*0.15;
     /**Thanksgiving and christmas season */
-    if((checkIn.getDate()>=20 && checkIn.getMonth()==11) || checkIn.getMonth() ==12)
+    if((checkIn.getDate()>=20 && checkIn.getMonth()==10) || checkIn.getMonth() ==11){
         increment+=basePrice*0.25;
+    }
     }
     return increment;
 }
