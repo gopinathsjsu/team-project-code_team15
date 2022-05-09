@@ -44,7 +44,7 @@ export default function HotelCards(props) {
       {/* <Button size="small">Share</Button> */}
       <Button size="small" onClick={()=>onViewRoomClick()}>View Room</Button>
     </CardActions>
-    {open == true?<HotelDialog popen={open} closeDialog = {onCloseRoom} item = {props.item} rooms = {props.rooms}  ></HotelDialog>:""}
+    {open == true?<HotelDialog popen={open} closeDialog = {onCloseRoom} item = {props.item} rooms = {props.rooms} c_id = {props.c_id} ></HotelDialog>:""}
   </Card>
   )
 }

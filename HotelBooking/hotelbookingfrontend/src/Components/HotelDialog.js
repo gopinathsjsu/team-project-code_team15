@@ -17,6 +17,15 @@ import Typography from '@mui/material/Typography';
 // import { LocalGasStation } from '@material-ui/icons';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
+import {
+    BrowserRouter as Router,
+    Link,
+} from "react-router-dom";
+
+
+
+
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -78,7 +87,7 @@ export default function HotelDialog(props) {
     }
    const onCheckBoxChange = (e)=>{
        console.log(e.target)
-       console.log(e.target.values)
+       console.log(e.target.value)
    }
 
     return (
@@ -116,9 +125,10 @@ export default function HotelDialog(props) {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleParentClose}>
-                        Proceed to Checkout
-                    </Button>
+
+                    <Link to ={{pathname:"/Checkout", state:{c_id:props.c_id ,rooms:props.rooms,item:props.item }}} >
+                    Proceed to Checkout
+                    </Link>
                 </DialogActions>
             </BootstrapDialog>
         </div>

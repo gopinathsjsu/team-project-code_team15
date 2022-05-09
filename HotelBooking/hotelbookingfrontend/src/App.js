@@ -11,6 +11,7 @@ import HomePage from './Components/HomePage'
 import ManageBookings from './Components/ManageBookings';
 import CustProfile from './Components/CustProfile';
 import HotelLandingPage from './Components/HotelComponents/HotelLandingPage';
+import CheckOutPage from './Components/CheckOutPage';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/Login" ><HotelLogin></HotelLogin></Route>
           <Route exact path="/Bookings" ><ManageBookings></ManageBookings></Route> 
           <Route exact path="/landing" ><HotelLandingPage></HotelLandingPage></Route>
+          <Route exact path = "/Checkout"component = {CheckOutPage} ></Route>
           </Switch>
       </Router>
     </div>

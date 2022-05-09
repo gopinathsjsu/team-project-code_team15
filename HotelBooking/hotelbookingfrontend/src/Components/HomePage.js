@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import HotelCards from './HotelCards';
 import HotelDialog from './HotelDialog';
 import axios from 'axios'
+import { ThumbDownSharp } from '@material-ui/icons';
 
 
 export default class HomePage extends Component {
@@ -23,10 +24,11 @@ export default class HomePage extends Component {
       numberOfRooms: 2,
       location: "",
       checkin: "",
-      checkout:"",
+      checkout: "",
       roomType: "single",
       noOfRooms: 0,
-      noOfGuests: 0
+      noOfGuests: 0,
+      c_id: 1
 
     }
   }
@@ -49,6 +51,13 @@ export default class HomePage extends Component {
       this.setState({
         hotelList: resp.data.groupedHotel
       })
+      let searchdata = {
+        numberOfRooms: this.state.numberOfRooms, location: this.state.location,
+        checkin: this.state.checkin, checkout: this.state.checkout, roomType: this.state.roomType, noOfRooms: this.state.noOfRooms,
+        noOfGuests: this.state.noOfGuests,
+        c_id:this.state.c_id
+      }
+      window.sessionStorage.setItem("searchData", JSON.stringify(searchdata))
     }).catch(err => {
       console.log(err)
     })
@@ -61,49 +70,49 @@ export default class HomePage extends Component {
     //  let hotelList =testdata.groupedHotel 
     //  console.log(hotelList)
     return this.state.hotelList.map((item, key) => {
-      return <li style={{ "marginBottom": "20px" }}><HotelCards item={item[0]} key={key} rooms={item}></HotelCards></li>
+      return <li style={{ "marginBottom": "20px" }}><HotelCards item={item[0]} key={key} rooms={item} c_id={this.state.c_id}></HotelCards></li>
     })
 
   }
 
 
-  onChangeHandler = (e)=>{
+  onChangeHandler = (e) => {
     // console.log(e.target.name)
     // console.log(e.target.value)
 
-    if (e.target.name =="CheckIn"){
+    if (e.target.name == "CheckIn") {
       this.setState({
-        checkin:e.target.value
+        checkin: e.target.value
       })
     }
-    else if (e.target.name =="CheckOut") {
+    else if (e.target.name == "CheckOut") {
       this.setState({
-        checkout:e.target.value
+        checkout: e.target.value
       })
     }
-    else if (e.target.name == "Room_Type"){
+    else if (e.target.name == "Room_Type") {
       this.setState({
-        roomType:e.target.value
+        roomType: e.target.value
       })
     }
-    else if (e.target.name == "Room_Type"){
+    else if (e.target.name == "Room_Type") {
       this.setState({
-        roomType:e.target.value
+        roomType: e.target.value
       })
     }
-    else if (e.target.name == "NofGuests"){
+    else if (e.target.name == "NofGuests") {
       this.setState({
-        noOfGuests:e.target.value
+        noOfGuests: e.target.value
       })
     }
-    else if (e.target.name =='NoOfRooms'){
+    else if (e.target.name == 'NoOfRooms') {
       this.setState({
-        noOfRooms:e.target.value
+        noOfRooms: e.target.value
       })
     }
-    else if (e.target.name =='location'){
+    else if (e.target.name == 'location') {
       this.setState({
-        location:e.target.value
+        location: e.target.value
       })
     }
 
@@ -127,19 +136,19 @@ export default class HomePage extends Component {
                 <div class="input-group" >
 
                   <div class="form-outline">
-                    <input type="search" name='location' placeholder='Location' id="form1" class="form-control" style={{ "width": "300px" }} onChange={(e)=>{this.onChangeHandler(e)}} />
+                    <input type="search" name='location' placeholder='Location' id="form1" class="form-control" style={{ "width": "300px" }} onChange={(e) => { this.onChangeHandler(e) }} />
                     <label class="form-label" for="form1">Search</label>
                   </div>
                   <div>
-                    <input type="date" id='CheckIn'name='CheckIn' onChange={(e)=>{this.onChangeHandler(e)}} style={{ "height": '39px', 'width': '120px', 'marginLeft': "10px", "display": "block" }}></input>
+                    <input type="date" id='CheckIn' name='CheckIn' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '120px', 'marginLeft': "10px", "display": "block" }}></input>
                     <label class="form-label" for="CheckIn">Check In</label>
                   </div>
                   <div>
-                    <input type="date" id='CheckOut'name='CheckOut' onChange={(e)=>{this.onChangeHandler(e)}} style={{ "height": '39px', 'marginLeft': "10px", "display": "block" }}></input>
+                    <input type="date" id='CheckOut' name='CheckOut' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'marginLeft': "10px", "display": "block" }}></input>
                     <label class="form-label" for="CheckOut">Check Out</label>
                   </div>
                   <div>
-                    <select name='Room_Type' onChange={(e)=>{this.onChangeHandler(e)}} style={{ "height": '39px', 'width': '120px', 'marginLeft': "10px", "display": "block" }}>
+                    <select name='Room_Type' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '120px', 'marginLeft': "10px", "display": "block" }}>
                       <option value="Single">
                         Single
                       </option>
@@ -153,14 +162,14 @@ export default class HomePage extends Component {
                     <label class="form-label" for="Room_Type">Room Type</label>
                   </div>
                   <div>
-                    <input type="number" name="NofGuests" onChange={(e)=>{this.onChangeHandler(e)}} style={{ "height": '39px', 'width': '100px', 'marginLeft': "10px", "display": "block" }}></input>
+                    <input type="number" name="NofGuests" onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '100px', 'marginLeft': "10px", "display": "block" }}></input>
                     <label class="form-label" for="NofGuests">Number of Guests</label>
                   </div>
                   <div>
-                    <input type="number" name='NoOfRooms' onChange={(e)=>{this.onChangeHandler(e)}} style={{ "height": '39px', 'width': '100px', 'marginLeft': "13px", "display": "block" }}></input>
+                    <input type="number" name='NoOfRooms' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '100px', 'marginLeft': "13px", "display": "block" }}></input>
                     <label class="form-label" for='NoOfRooms' style={{ "marginLeft": "5px" }}>Number of Rooms</label>
                   </div>
-                  <button type="button" class="btn btn-primary" style={{ "height": '39px', "marginLeft": "10px", "width": "100px" }} onClick = {()=>{this.searchHotels()}} >
+                  <button type="button" class="btn btn-primary" style={{ "height": '39px', "marginLeft": "10px", "width": "100px" }} onClick={() => { this.searchHotels() }} >
                     Search
                     {/* <i class="fas fa-search"></i> */}
                   </button>
@@ -173,9 +182,9 @@ export default class HomePage extends Component {
             </div>
 
           </div>
-           {this.state.hotelList.length == 0?<center style={{"marginTop":"200px"}}><h3>Welcome to Avalon.com</h3></center>:<div className='row d-flex justify-content-center' style={{ "margin": "0px", "padding": "0px" }} >
+          {this.state.hotelList.length == 0 ? <center style={{ "marginTop": "200px" }}><h3>Welcome to Avalon.com</h3></center> : <div className='row d-flex justify-content-center' style={{ "margin": "0px", "padding": "0px" }} >
             <div className='col-md-2'>
-            
+
             </div>
             <div className='col-md-8 d-flex justify-content-center'>
               <ul style={{ "list-style": "none" }}>
@@ -187,7 +196,7 @@ export default class HomePage extends Component {
             </div>
 
           </div>}
-     
+
         </div>
       </div>
     )
