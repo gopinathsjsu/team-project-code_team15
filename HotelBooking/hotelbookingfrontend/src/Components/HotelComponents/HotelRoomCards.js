@@ -2,33 +2,47 @@ import { Card, CardContent, CardMedia,CardActions } from '@mui/material'
 import React, { Component } from 'react'
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+
+
 
 export default class HotelRoomCards extends Component {
   render() {
     return (
-      <div>
-          <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        component="img"
-        alt="green iguana"
-        height="140"
-        image="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
-      </div>
+      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </ListItemAvatar>
+        <ListItemText
+          primary={this.props.data.roomNo}
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+               {this.props.data.roomType=="single"?"Single Room":""}
+               {this.props.data.roomType=="double"?"Double Room":""}
+               {this.props.data.roomType=="suite"?"Suite Room":""}
+              </Typography>
+              <br></br>
+                {"Base Price:"} {this.props.data.basePrice}
+                <br></br>
+                {"Room Capacity"}{this.props.data.roomCapacity}
+            </React.Fragment>
+          }
+        />
+      </ListItem>
+      
+    </List>
     )
   }
 }
