@@ -7,6 +7,7 @@ const search=require("./Routes/Search")
 const customerRouter= require("./Routes/CustomerRoutes")
 const roomsRouter=require("./Routes/RoomsRoutes")
 const hotelsRouter=require("./Routes/HotelRoutes")
+const rewardsRouter=require("./Routes/RewardsRoutes")
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 app.use(cors());
@@ -44,3 +45,4 @@ app.use('/bookings',bookingsRouter)
 app.use('/search',search)
 app.use('/rooms',roomsRouter)
 app.use('/hotels',hotelsRouter);
+app.use("/rewards",rewardsRouter)
