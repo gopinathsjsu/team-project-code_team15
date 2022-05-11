@@ -9,4 +9,9 @@ router.get("/all",async(req,res)=>{
     result=_.groupBy(result[0],"hotelId")
     res.send({hotelIds:result})
 })
+router.post("/",async(req,res)=>{
+    let {basePrice,hotelId,rCapacity,rType,roomNo}=req.body;
+    // let query=`insert into Rooms(hotelId,roomNo,basePrice,roomType,roomCapacity) values(?,?,?,?,?)`;
+    // let result=await pool.query(query,[])
+})
 module.exports=router
