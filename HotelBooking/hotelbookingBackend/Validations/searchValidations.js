@@ -15,17 +15,27 @@ class checkIfDatesAreValid extends searchHandler{
         this.nextObj=nextObj;
     }
     validate(req,res){
+        let msg;
         let checkIn=new Date(req.body.checkin);
         let checkOut=new Date(req.body.checkout)
         const diffDays = Math.ceil((checkOut-checkIn) / (1000 * 60 * 60 * 24)); 
         let isValid= (checkIn<checkOut && (diffDays<=7) && checkIn>new Date())
+        if(checkIn>checkOut){
+            msg="Invalid dates, checkin should be before checkout"
+        }
+        if(diffDays>7){
+            msg="You cannot book for more than 7 days"
+        }
+        if(checkIn<new Date()){
+            msg="Checkin cannot be today or in past. Please select checkin in future"
+        }
         console.log(diffDays)
         if(isValid){
             this.nextObj.validate(req,res);
         }
         else {
             res.status(401).send({
-                message:"invalid dates"
+                message:msg
             })
         }
     }
