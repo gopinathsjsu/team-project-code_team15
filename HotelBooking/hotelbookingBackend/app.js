@@ -5,7 +5,8 @@ var bodyParser = require('body-parser')
 const bookingsRouter=require('./Routes/BookingsRoutes')
 const search=require("./Routes/Search")
 const customerRouter= require("./Routes/CustomerRoutes")
-
+const roomsRouter=require("./Routes/RoomsRoutes")
+const hotelsRouter=require("./Routes/HotelRoutes")
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 app.use(cors());
@@ -41,3 +42,5 @@ app.listen(3001, function () {
 app.use("/customer",customerRouter)
 app.use('/bookings',bookingsRouter)
 app.use('/search',search)
+app.use('/rooms',roomsRouter)
+app.use('/hotels',hotelsRouter);
