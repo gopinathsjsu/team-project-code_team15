@@ -14,7 +14,8 @@ export default class RoomForm extends Component {
       hotelId:"",
       rType:"",
       rCapacity:1,
-      basePrice:0
+      basePrice:0,
+      roomNo:""
    }
    sendFormDetails=(values)=>{
      console.log(values)
