@@ -23,7 +23,7 @@ function App() {
           <Switch>
           <Route exact path="/" ><HomePage></HomePage></Route>
           <Route exact path="/Login" ><HotelLogin></HotelLogin></Route>
-          <Route path="/Register" element={<HotelRegistration />} ></Route>
+          <Route exact path="/Register" ><HotelRegistration /> </Route>
           <Route exact path="/Bookings" ><ManageBookings></ManageBookings></Route> 
           <Route exact path="/landing" ><HotelLandingPage></HotelLandingPage></Route>
           <Route exact path = "/Checkout"component = {CheckOutPage} ></Route>

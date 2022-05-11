@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import NavBar from '../NavBar';
 import BookingsList from './BookingsList';
 
 export default class ManageBookings extends Component {
@@ -13,13 +14,36 @@ export default class ManageBookings extends Component {
         let data=[1,2,3];
         this.setState({list:data})
     }
+  standardStyle = { padding: "0px", margin: "0px" }
   render() {
     return (
       <div>
-          <h1>Manage Bookings</h1>
-          {this.state.list.map(i=>{
-              return <BookingsList ></BookingsList>
+    <NavBar></NavBar>
+         <div className='container-fluid' style={{...this.standardStyle,marginTop:"100px"}}>
+         {/* <center> */}
+         {this.state.list.map(i=>{
+              return<div className='row' style={this.standardStyle}>
+                <div className = 'col-md-3' style={this.standardStyle}>
+
+                </div>
+                
+                <div className='col-md-6' style={this.standardStyle}>
+                <center>
+                <BookingsList ></BookingsList>
+                </center>
+                </div>
+                <div className='col-md-3' style={this.standardStyle}>
+
+                </div>
+                
+           
+              </div> 
+              
           })}
+          {/* </center>   */}
+      
+         </div>
+      
         </div>
     )
   }
