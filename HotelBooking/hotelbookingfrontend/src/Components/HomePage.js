@@ -28,42 +28,74 @@ export default class HomePage extends Component {
       roomType: "single",
       noOfRooms: 0,
       noOfGuests: 0,
-      c_id: 1
+      c_id: 1,
+      today: ""
 
     }
   }
 
   componentDidMount(props) {
 
-
-  }
-
-  searchHotels = () => {
-    axios.post("http://localhost:3001/search", {
-      location: this.state.location,
-      checkin: this.state.checkin,
-      checkout: this.state.checkout,
-      roomType: this.state.roomType,
-      noOfRooms: this.state.noOfRooms,
-      noOfGuests: this.state.noOfGuests
-    }).then(resp => {
-      console.log(resp)
-      this.setState({
-        hotelList: resp.data.groupedHotel
-      })
-      let searchdata = {
-        numberOfRooms: this.state.numberOfRooms, location: this.state.location,
-        checkin: this.state.checkin, checkout: this.state.checkout, roomType: this.state.roomType, noOfRooms: this.state.noOfRooms,
-        noOfGuests: this.state.noOfGuests,
-        c_id:this.state.c_id
-      }
-      window.sessionStorage.setItem("searchData", JSON.stringify(searchdata))
-    }).catch(err => {
-      console.log(err)
+    let today = new Date()
+    today.setDate(today.getDate() + 1)
+    let today2 = today.toISOString().split('T')[0]
+    console.log(today2)
+    this.setState({
+      today: today2
     })
 
   }
 
+  searchHotels = () => {
+    if (this.validate() == true) {
+      axios.post("http://localhost:3001/search", {
+        location: this.state.location,
+        checkin: this.state.checkin,
+        checkout: this.state.checkout,
+        roomType: this.state.roomType,
+        noOfRooms: this.state.noOfRooms,
+        noOfGuests: this.state.noOfGuests
+      }).then(resp => {
+        console.log(resp)
+        this.setState({
+          hotelList: resp.data.groupedHotel
+        })
+        let searchdata = {
+          numberOfRooms: this.state.numberOfRooms, location: this.state.location,
+          checkin: this.state.checkin, checkout: this.state.checkout, roomType: this.state.roomType, noOfRooms: this.state.noOfRooms,
+          noOfGuests: this.state.noOfGuests,
+          c_id: this.state.c_id
+        }
+        window.sessionStorage.setItem("searchData", JSON.stringify(searchdata))
+      }).catch(err => {
+        console.log(err)
+      })
+
+    }
+
+
+  }
+
+  validate = () => {
+
+    var letters = /^[A-Za-z]+$/
+    if (this.state.noOfGuests <= 0 || this.state.noOfRooms <= 0) {
+
+      alert("Invalid Number of Guests or Invalid Number of Rooms")
+      return false
+    }
+    else if (!this.state.location.match(letters)) {
+
+      alert("Invalid Location")
+      return false
+    }
+    else if (this.state.checkin == "" || this.state.checkout == "") {
+      alert("Please enter the dates")
+      return false
+    }
+    return true
+
+  }
 
   loadHotels = () => {
 
@@ -77,17 +109,21 @@ export default class HomePage extends Component {
 
 
   onChangeHandler = (e) => {
-    // console.log(e.target.name)
-    // console.log(e.target.value)
+
 
     if (e.target.name == "CheckIn") {
+
+      console.log(e.target.value)
+      let { month, day, year } = this.changeDate(e.target.value);
+    
       this.setState({
-        checkin: e.target.value
+        checkin: month + "/" + day + "/" + year
       })
     }
     else if (e.target.name == "CheckOut") {
+      let { month, day, year } = this.changeDate(e.target.value);
       this.setState({
-        checkout: e.target.value
+        checkout: month + "/" + day + "/" + year
       })
     }
     else if (e.target.name == "Room_Type") {
@@ -121,6 +157,21 @@ export default class HomePage extends Component {
 
 
 
+  changeDate(e) {
+    let date = new Date(e);
+    let month = date.getMonth() + 1;
+    let day = date.getUTCDate();
+    let year = date.getUTCFullYear();
+
+    if (day < 10) {
+      day = "0" + day;
+    }
+    if (month < 10) {
+      month = "0" + month;
+    }
+    return { month, day, year };
+  }
+
   render() {
     console.log(this.state)
     return (
@@ -140,11 +191,11 @@ export default class HomePage extends Component {
                     <label class="form-label" for="form1">Search</label>
                   </div>
                   <div>
-                    <input type="date" id='CheckIn' name='CheckIn' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '120px', 'marginLeft': "10px", "display": "block" }}></input>
+                    <input type="date" id='CheckIn' name='CheckIn' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '120px', 'marginLeft': "10px", "display": "block" }} min={this.state.today}></input>
                     <label class="form-label" for="CheckIn">Check In</label>
                   </div>
                   <div>
-                    <input type="date" id='CheckOut' name='CheckOut' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'marginLeft': "10px", "display": "block" }}></input>
+                    <input type="date" id='CheckOut' name='CheckOut' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'marginLeft': "10px", "display": "block" }} min={this.state.today}   ></input>
                     <label class="form-label" for="CheckOut">Check Out</label>
                   </div>
                   <div>
@@ -162,11 +213,11 @@ export default class HomePage extends Component {
                     <label class="form-label" for="Room_Type">Room Type</label>
                   </div>
                   <div>
-                    <input type="number" name="NofGuests" onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '100px', 'marginLeft': "10px", "display": "block" }}></input>
+                    <input type="number" name="NofGuests" onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '100px', 'marginLeft': "10px", "display": "block" }} min={1}></input>
                     <label class="form-label" for="NofGuests">Number of Guests</label>
                   </div>
                   <div>
-                    <input type="number" name='NoOfRooms' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '100px', 'marginLeft': "13px", "display": "block" }}></input>
+                    <input type="number" name='NoOfRooms' onChange={(e) => { this.onChangeHandler(e) }} style={{ "height": '39px', 'width': '100px', 'marginLeft': "13px", "display": "block" }} min={1} ></input>
                     <label class="form-label" for='NoOfRooms' style={{ "marginLeft": "5px" }}>Number of Rooms</label>
                   </div>
                   <button type="button" class="btn btn-primary" style={{ "height": '39px', "marginLeft": "10px", "width": "100px" }} onClick={() => { this.searchHotels() }} >
