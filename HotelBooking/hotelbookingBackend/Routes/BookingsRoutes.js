@@ -1,30 +1,29 @@
 var express = require('express');
 var pool = require('./../Database/db');
-const { addRewards, deleteRewards } = require('./Rewards-service');
+const { addRewards, deleteRewards,updateRewards } = require('./Rewards-service');
 var router=express.Router();
 /**
  * To get all the bookings for a customer with a customer id
  */
-router.get("/:custId/all",(req, res)=>{
-    res.status(200).send({
-        "bookings":[
-            {"bookingId":1},
-            {"bookingId":2}
-        ]
-    })
+router.get("/:custId/all",async (req, res)=>{
+    let query=`select * from ReservationsMaster as t1 left join Hotels as t2 on t1.hotelId=t2.hotelId where customerid=?;`
+    let result=await pool.query(query,[req.params.custId]);
+    res.send(result[0]);
 }
 )
 /**
  * To get booking details with customer id and booking id inputs
  */
-router.get("/:custId/:bookingId",(req,res)=>{
-
+router.get("/:custId/:bookingId",async (req,res)=>{
+    let query=`select * from Reservations as t1 left join Rooms as t2 on t1.roomId=t2.roomId where reservationId =?; `
+    let result=await pool.query(query,[req.params.bookingId]);
+    res.send(result[0])
 })
 /**
  * To Make a new reservation or booking for a customer
  */
 router.post("/",async(req,res)=>{
-    let {custId,hotelId,totalPrice,noOfRooms,noOfGuests,reservationDate,rooms,checkIn,checkOut,roomType}=req.body;
+    let {custId,hotelId,basePrice,amenitiesPrice,totalPrice,noOfRooms,noOfGuests,reservationDate,rooms,checkIn,checkOut,roomType}=req.body;
     const conn=(await pool.getConnection());
 
     try{
@@ -32,9 +31,9 @@ router.post("/",async(req,res)=>{
     let checkOutDate=new Date(checkOut)
     const noOfDays=Math.ceil((checkOutDate-checkInDate) / (1000 * 60 * 60 * 24)); 
     conn.beginTransaction();
-    let result=await conn.query(`Insert into ReservationsMaster (customerId,hotelId,totalPrice,noOfRooms,noOfGuests,reservationDate,roomType,noOfDays)
-    values(?,?,?,?,?,?,?,?);
-    select LAST_INSERT_ID() as reservationId`,[custId,hotelId,totalPrice,noOfRooms,noOfGuests,reservationDate,roomType,noOfDays]);
+    let result=await conn.query(`Insert into ReservationsMaster (customerId,hotelId,basePrice,amenitiesPrice,totalPrice,noOfRooms,noOfGuests,reservationDate,roomType,noOfDays)
+    values(?,?,?,?,?,?,?,?,?,?);
+    select LAST_INSERT_ID() as reservationId`,[custId,hotelId,basePrice,amenitiesPrice,totalPrice,noOfRooms,noOfGuests,reservationDate,roomType,noOfDays]);
     let reservationId=result[0][1][0].reservationId;
     for(let i=0;i<rooms.length;i++){
         await conn.query(`insert into Reservations(reservationId,roomId,checkInDate,checkOutDate,price,breakfast,fitnessRoom,swimmingPool,parking,allMeals)
@@ -61,10 +60,10 @@ router.put("/",async (req,res)=>{
     let result=await pool.query(`select checkInDate,checkOutDate from Reservations where reservationId=?;`,[reservationId]);
     let {checkInDate,checkOutDate}=result[0][0]||{};
     //Storing string dates
-    newCheckInStr=newCheckIn;
-    newCheckOutStr=newCheckOut;
-    checkInStr=checkInDate;
-    checkOutStr=checkOutDate;
+    let newCheckInStr=newCheckIn;
+    let newCheckOutStr=newCheckOut;
+    let checkInStr=checkInDate;
+    let checkOutStr=checkOutDate;
     //Convert strings to dates
     newCheckIn=new Date(newCheckIn);
     newCheckOut=new Date(newCheckOut);
@@ -90,15 +89,28 @@ router.put("/",async (req,res)=>{
     }
     if(isOverlap && intervalsToCheck.length==0){
         console.log("new checkin and checout dates can be booked for the same room by updating existing rows")
-        let updatetimings=`update Reservations set checkInDate=?,checkOutDate=? where reservationid=?`
+        await modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr);
+        res.send({msg:"updated rewards and modified dates"})
     }
     if(isOverlap && intervalsToCheck.length>0){
+        let isAvailable=true
         console.log("check the availability for these intervals for this roomId and if available make reservation by updating dates")
+        for(let i=0;i<intervalsToCheck.length;i++){
+            isAvailable=isAvailable && await checkAvailability(i.start,i.end)
+        }
+        if(isAvailable){
+            await modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr);
+        }else{
+            //not available
+        }
+        
     }
     if(!isOverlap){
         console.log("check the availability for the newCheckin and checkOut and make a new reservation")
+        await checkAvailability(start,end);
+        await modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr);
     }
-    res.send(intervalsToCheck);
+    // res.send(intervalsToCheck);
 
 })
 /**
@@ -134,3 +146,23 @@ router.delete("/",async (req,res)=>{
 
 })
 module.exports=router
+
+
+async function modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr) {
+    let getDetailsFromReservationsMaster = `select * from ReservationsMaster where reservationId=?`;
+    let reservationMasterDetails = await pool.query(getDetailsFromReservationsMaster, [reservationId]);
+    let { totalPrice, noOfDays, amenitiesPrice, basePrice, customerId, roomType, noOfRooms } = (reservationMasterDetails[0][0]);
+    // reservationMasterDetails=reservationMasterDetails[0]
+    let newNoOfDays = Math.ceil((newCheckOut - newCheckIn) / (1000 * 60 * 60 * 24));
+    let newBasePrice = (basePrice / noOfDays) * newNoOfDays;
+    let newAmenitiesPrice = (amenitiesPrice / noOfDays) * newNoOfDays;
+    let newTotalPrice = (totalPrice / noOfDays) * newNoOfDays;
+    let updateReservationsMaster = `update ReservationsMaster set noOfDays =?,basePrice=?,amenitiesPrice=?,totalPrice=? where reservationId=?`;
+    let updatetimings = `update Reservations set checkInDate=?,checkOutDate=? where reservationid=?`;
+
+    await pool.query(updateReservationsMaster + ';' + updatetimings, [newNoOfDays, newBasePrice, newAmenitiesPrice, newTotalPrice, reservationId, newCheckInStr, newCheckOutStr, reservationId]);
+    await updateRewards(customerId, noOfDays, newNoOfDays, roomType, noOfRooms);
+}
+async function  checkAvailability(start,end,reservationId){
+
+}
