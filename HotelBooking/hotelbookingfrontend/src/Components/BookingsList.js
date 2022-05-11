@@ -21,22 +21,19 @@ export default class BookingsList extends Component {
     return (
       <div>
           <Accordion expanded={this.state.expanded === 'panel1'} onChange={this.handleChange('panel1')}
-          elevation={4} style={{width:"60%"}} >
+          elevation={4} style={{"marginTop":"10px"}} >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            Booking ID
+            Booking ID 1
           </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
+          <Typography sx={{ color: 'text.secondary' }}>Avalon on the Alameda</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {/* <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
-          </Typography> */}
+          <h5>Checkin:</h5>
           <ButtonGroup variant="contained" aria-label="outlined primary button group">
             <Button>Cancel</Button>
             <Button>Edit</Button>

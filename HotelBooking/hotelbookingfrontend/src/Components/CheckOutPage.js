@@ -1,6 +1,8 @@
 
+import { Checkbox } from '@mui/material'
 import axios from 'axios'
 import React, { Component } from 'react'
+import { Button } from 'react-bootstrap'
 import NavBar from '../NavBar'
 import CheckoutCard from './CheckoutCard'
 
@@ -11,7 +13,8 @@ export default class CheckOutPage extends Component {
     this.state = {
       eminitiesTracker: {},
       selectedRooms: [],
-      totalPrice: 0
+      totalPrice: 0,
+
     }
   }
   componentDidMount(props) {
@@ -36,7 +39,7 @@ export default class CheckOutPage extends Component {
         allMeals: false
       }).then((res) => {
         console.log(res)
-        eminitiesTracker[selectedRooms[i].roomID] = { breakfast: false, fitnessRoom: false, swimmingPool: false, parking: false, allMeals: false, price: res.data[0].price ,roomNo:selectedRooms[i].roomNo,roomType:selectedRooms[i].roomType }
+        eminitiesTracker[selectedRooms[i].roomID] = { breakfast: false, fitnessRoom: false, swimmingPool: false, parking: false, allMeals: false, price: res.data.totalPrice, roomNo: selectedRooms[i].roomNo, roomType: selectedRooms[i].roomType,roomId:selectedRooms[i].roomID }
       }))
     }
     Promise.all(promises).then(() => {
@@ -45,28 +48,64 @@ export default class CheckOutPage extends Component {
         selectedRooms: selectedRooms
       })
       console.log(eminitiesTracker)
-    }).then(()=>{
-      this.CalculateTotalprice()
+    }).then(() => {
+      this.calculateTotalPrice()
     })
   }
 
   onChangeEminities = (roomID, eminity) => {
     console.log(roomID, eminity)
+    let searchDetails = JSON.parse(window.sessionStorage.getItem("searchData"))
+
     this.setState({
       ...this.state,
       eminitiesTracker: {
         ...this.state.eminitiesTracker,
         [roomID]: { ...this.state.eminitiesTracker[roomID], [eminity]: !this.state.eminitiesTracker[roomID][eminity] }
       }
+    }, () => {
+      axios.post('http://localhost:3001/customer/getPricing', {
+        custID: searchDetails.c_id,
+        hotelId: this.props.location.state.item.hotelId,
+        roomId: roomID,
+        checkIn: searchDetails.checkin,
+        checkOut: searchDetails.checkout,
+        ...this.state.eminitiesTracker[roomID]
+      }).then(res => {
+        console.log(res)
+        this.setState({
+          eminitiesTracker: { ...this.state.eminitiesTracker, [roomID]: { ...this.state.eminitiesTracker[roomID], price: res.data.totalPrice } }
+        })
+        this.calculateTotalPrice()
+      })
     })
+
+
+
+
+  }
+  calculateTotalPrice = () => {
+    let totalPrice = 0
+    for (let [key, value] of Object.entries(this.state.eminitiesTracker)) {
+      totalPrice += this.state.eminitiesTracker[key].price
+    }
+    this.setState({
+      totalPrice: totalPrice
+    })
+
   }
 
-  CalculateTotalprice = () => {
-    //  let total
-    // for(let [key,value] of Object.entries(this.state.eminitiesTracker)){
-    //   // console.log(key,value)
-    // }
-    
+  DisplayFinalPriceList = () => {
+
+    return Object.keys(this.state.eminitiesTracker).map((item, key) => {
+
+      return <tr>
+        <td style={{ "paddingRight": "50px" }}>Room No {this.state.eminitiesTracker[item].roomNo}</td>
+        <td style={{ "paddingRight": "30px" }}>{this.state.eminitiesTracker[item].roomType} Room</td>
+        <td>{this.state.eminitiesTracker[item].price}</td>
+      </tr>
+
+    })
 
   }
 
@@ -79,6 +118,36 @@ export default class CheckOutPage extends Component {
       return <li><CheckoutCard item={item} key={key} onChangeEminities={this.onChangeEminities}></CheckoutCard></li>
     })
   }
+
+
+ bookRooms = ()=>{
+  let searchDetails = JSON.parse(window.sessionStorage.getItem("searchData"))
+  var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+console.log(this.props.location.state.item.hotelId)
+today = mm + '/' + dd + '/' + yyyy;
+  axios.post('http://localhost:3001/bookings',{
+    custId:searchDetails.c_id,
+    hotelId:this.props.location.state.item.hotelId,
+    basePrice:0,
+    amenitiesPrice:0,
+    totalPrice:this.state.totalPrice,
+    rewardsUsed:0,
+    noOfRooms:searchDetails.noOfRooms,
+    noOfGuests:searchDetails.noOfGuests,
+    reservationDate:today,
+    roomType:searchDetails.roomType,
+    rooms:Object.values(this.state.eminitiesTracker),
+    checkIn:searchDetails.checkin,
+    checkOut:searchDetails.checkout
+  }).then(res=>{console.log(res)})
+  .catch(err=>{console.log(err)})
+
+ }
+
+
 
   render() {
     console.log(this.state)
@@ -98,22 +167,20 @@ export default class CheckOutPage extends Component {
             <div className='col-md-5' style={this.standardStyle}>
               <center>
                 <table style={{ "marginTop": "100px" }}>
-                  {/* <tr>
-                    <td style={{ "paddingRight": "50px" }}>Room No 101</td>
-                    <td style={{ "paddingRight": "30px" }}>Single Room</td>
-                    <td>300$</td>
-                  </tr>
-                  <tr>
-                    <td style={{ "paddingRight": "50px" }}>Room No 102</td>
-                    <td style={{ "paddingRight": "30px" }}>Single Room</td>
-                    <td>400$</td>
-                  </tr>
+                  {this.DisplayFinalPriceList()}
+
                   <tr>
                     <td style={{ "paddingRight": "50px" }}></td>
                     <td style={{ "paddingRight": "50px" }}>Total Price</td>
-                    <td> 700$</td>
-                  </tr> */}
+                    <td>{this.state.totalPrice}</td>
+                  </tr>
                 </table>
+                <div style={{marginTop:"30px"}}>
+                <label for = 'Rewards'>Use My Rewards</label>
+                <Checkbox name='Rewards'></Checkbox>
+                <Button onClick = {()=>{this.bookRooms()}} style={{"width":"83px","marginLeft":"78px"}}>Book</Button>
+                </div>
+            
               </center>
 
             </div>
