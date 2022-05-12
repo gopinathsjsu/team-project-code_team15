@@ -157,6 +157,7 @@ export default function HotelDialog(props) {
                  alert("Booking Modified Successfully")
                  setOCheckIn(checkIn)
                  setOCheckOut(checkOut)
+                 handleParentClose()
              }else{
                  alert("Hotel booked in selected dates")
              }
@@ -173,6 +174,7 @@ export default function HotelDialog(props) {
         }).then((res)=>{
              if(res.data.msg=="Successfully deleted reservation and also removed rewards associated"){
               alert("Reservation deleted Successfully")
+              handleParentClose()
              }
              else{
                  alert("Reservation already deleted")
