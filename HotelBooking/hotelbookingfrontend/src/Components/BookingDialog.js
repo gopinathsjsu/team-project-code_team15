@@ -80,7 +80,9 @@ export default function HotelDialog(props) {
     const [today, setToday] = React.useState("");
     const [checkIn,setCheckIn] = React.useState("");
     const [checkOut,setCheckOut] = React.useState("");
-
+    const [OcheckIn,setOCheckIn] = React.useState("")
+    const [OcheckOut,setOCheckOut] = React.useState("");
+    const [price,setPrice] = React.useState(0)
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -102,21 +104,27 @@ export default function HotelDialog(props) {
         setEdit(true)
     };
     const onCheckInChange = (e)=>{
+        console.log(e)
         let { month, day, year } = changeDate(e.target.value);
+        console.log(month + "/" + day + "/" + year)
         setCheckIn(month + "/" + day + "/" + year)
     }
     const onCheckOutChange = (e)=>{
         let { month, day, year } = changeDate(e.target.value);
+        console.log(month + "/" + day + "/" + year)
         setCheckOut(month + "/" + day + "/" + year)  
     }
     useEffect(() => {
-        axios.get('http://localhost:3001/bookings/1/52').then(res => {
+        axios.get(`http://localhost:3001/bookings/${props.item.hotelId}/${props.item.reservationId}}`).then(res => {
             console.log(res.data)
             setData(res.data)
             let today = new Date()
             today.setDate(today.getDate() + 1)
             let today2 = today.toISOString().split('T')[0]
             setToday(today2)
+            setOCheckIn(res.data[0]?.checkInDate)
+            setOCheckOut(res.data[0]?.checkOutDate)
+            setPrice(props.item.totalPrice)
         })
     }, 0)
 
@@ -136,9 +144,43 @@ export default function HotelDialog(props) {
     }
 
     const bookNewDates = (e) => {
-         axios.get()
+         console.log({    custId:props.item.customerId,
+            reservationId:props.item.reservationId,
+            newCheckIn:checkIn,
+            newCheckOut:checkOut})
+         axios.put("http://localhost:3001/bookings",{    custId:props.item.reservationId,
+         reservationId:props.item.reservationId,
+         newCheckIn:checkIn,
+         newCheckOut:checkOut}).then(res=>{
+             console.log(res.data)
+             if(res.data.msg == "updated rewards and modified dates") {
+                 alert("Booking Modified Successfully")
+                 setOCheckIn(checkIn)
+                 setOCheckOut(checkOut)
+             }else{
+                 alert("Hotel booked in selected dates")
+             }
+         })
     }
-
+    const cancelTheReservations = ()=>{
+        console.log({
+            custId:props.item.customerId,
+            reservationId:props.item.reservationId
+        })
+        axios.delete("http://localhost:3001/bookings",{
+            data:{custId:props.item.customerId,
+            reservationId:props.item.reservationId}
+        }).then((res)=>{
+             if(res.data.msg=="Successfully deleted reservation and also removed rewards associated"){
+              alert("Reservation deleted Successfully")
+             }
+             else{
+                 alert("Reservation already deleted")
+             }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
 
     return (
         <div>
@@ -161,24 +203,23 @@ export default function HotelDialog(props) {
                     <div className='container'>
                         <div className='row'>
                             <div className='col-md-3'>
-                                <center> Check In:{data[0]?.checkInDate}</center>
+                                <center> Check In:{OcheckIn}</center>
                             </div>
                             <div className='col-md-3'>
-                                <center> Check Out:{data[0]?.checkOutDate}</center>
+                                <center> Check Out:{OcheckOut}</center>
                             </div>
                             <div className='col-md-3'>
                                 <center> Number Of Rooms: {data.length}</center>
                             </div>
                             <div className='col-md-3'>
-                                <center> Total Price Paid: {props.item.totalPrice} $</center>
+                                <center> Total Price : {price} $</center>
                             </div>
-
                         </div>
                         {edit == true ?
                             <div className='row' style={{ "marginTop": "40px" }}>
-                                <div className="col-md-5"><center><label for="CheckIn">New Check In</label> <input type="date" name="CheckIn" min={today} ></input></center></div>
-                                <div className="col-md-5"><center><label for="CheckOut">New Check Out</label> <input type="date" name="CheckOut" min={today} ></input></center></div>
-                                <div className="col-md-2"><button className='btn btn-primary'>Book</button></div>
+                                <div className="col-md-5"><center><label for="CheckIn">New Check In</label> <input type="date" name="CheckIn" min={today} onChange={(e)=>{onCheckInChange(e)}}></input></center></div>
+                                <div className="col-md-5"><center><label for="CheckOut">New Check Out</label> <input type="date" name="CheckOut" min={today} onChange={(e)=>{onCheckOutChange(e)}}></input></center></div>
+                                <div className="col-md-2"><button className='btn btn-primary' onClick={(e)=>{bookNewDates()}}>Book</button></div>
                             </div> : ""}
                     </div>
                 </DialogContent>
@@ -186,7 +227,7 @@ export default function HotelDialog(props) {
                     <Button onClick={() => { openEdit() }}>
                         Edit
                     </Button>
-                    <Button >
+                    <Button onClick={()=>{cancelTheReservations()}}>
                         Cancel The Reservation
                     </Button>
                 </DialogActions>
