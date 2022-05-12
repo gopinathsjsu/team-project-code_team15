@@ -90,7 +90,7 @@ function HotelRegistration() {
   console.log(firstName, lastName, email, password, confirmPassword);
   return (
     <div>
-      <NavBar></NavBar>
+      <NavBar myBookingDisplay = {false}></NavBar>
       <div className='container-fluid' style={standardStyle}>
         <div className='row' style={standardStyle}>
           <div className='col-md-2' style={standardStyle}>

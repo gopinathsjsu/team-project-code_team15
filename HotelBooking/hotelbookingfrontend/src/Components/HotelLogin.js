@@ -67,27 +67,27 @@ export default class HotelLogin extends Component {
     console.log(this.state)
     return (
       <div>
-        <NavBar></NavBar>
+        <NavBar myBookingDisplay = {false}></NavBar>
         {/* <div className='img'> */}
         <div className='container-fluid' style={this.standardStyle}>
           <div className='row'>
             <div className='col-md-2'></div>
             <div className='col-md-8'>
-              <form class="border border-light p-5" style={{ "marginTop": "80px" }}>
+              <form className="border border-light p-5" style={{ "marginTop": "80px" }}>
 
-                <p class="h4 mb-4 ">Sign in</p>
+                <p className="h4 mb-4 ">Sign in</p>
 
-                <input type="email" name="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" onChange={(e)=>{this.onChangeEmail(e)}} />
+                <input type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" onChange={(e)=>{this.onChangeEmail(e)}} />
 
-                <input type="password" name = "password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" onChange={(e)=>{this.onChangePassword(e)}} />
+                <input type="password" name = "password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" onChange={(e)=>{this.onChangePassword(e)}} />
 
-                <div class="d-flex justify-content-between">
+                <div className="d-flex justify-content-between">
         
                 </div>
 
-                <button class="btn btn-info btn-block my-4" type="button" onClick={()=>{this.onSubmit()}} >Sign in</button>
+                <button className="btn btn-info btn-block my-4" type="button" onClick={()=>{this.onSubmit()}} >Sign in</button>
 
-                <div class="text-center">
+                <div className="text-center">
                   <p>Not a member?
                     <a href="/Register">Register</a>
                   </p>

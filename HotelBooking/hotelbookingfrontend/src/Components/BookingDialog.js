@@ -138,26 +138,39 @@ export default function HotelDialog(props) {
         }
         return { month, day, year };
     }
+    const validate = ()=>{
+        if(checkIn.length <=0 || checkOut.length <=0){
+            return false
+        }else{
+            
+        }
+        return true
+    } 
 
     const bookNewDates = (e) => {
          console.log({    custId:props.item.customerId,
             reservationId:props.item.reservationId,
             newCheckIn:checkIn,
             newCheckOut:checkOut})
-         axios.put("http://localhost:3001/bookings",{    custId:props.item.reservationId,
-         reservationId:props.item.reservationId,
-         newCheckIn:checkIn,
-         newCheckOut:checkOut}).then(res=>{
-             console.log(res.data)
-             if(res.data.msg == "updated rewards and modified dates") {
-                 alert("Booking Modified Successfully")
-                 setOCheckIn(checkIn)
-                 setOCheckOut(checkOut)
-                 handleParentClose()
-             }else{
-                 alert("Hotel booked in selected dates")
-             }
-         })
+            if(validate()){
+                axios.put("http://localhost:3001/bookings",{    custId:props.item.reservationId,
+                reservationId:props.item.reservationId,
+                newCheckIn:checkIn,
+                newCheckOut:checkOut}).then(res=>{
+                    console.log(res.data)
+                    if(res.data.msg == "updated rewards and modified dates") {
+                        alert("Booking Modified Successfully")
+                        setOCheckIn(checkIn)
+                        setOCheckOut(checkOut)
+                        handleParentClose()
+                    }else{
+                        alert("Hotel booked in selected dates")
+                    }
+                })
+            }else{
+                alert("Invalid Dates")
+            }
+   
     }
     const cancelTheReservations = ()=>{
         console.log({

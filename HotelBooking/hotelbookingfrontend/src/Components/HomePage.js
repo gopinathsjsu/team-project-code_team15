@@ -51,7 +51,7 @@ export default class HomePage extends Component {
   searchHotels = () => {
     if (this.validate() == true) {
       axios.post("http://localhost:3001/search", {
-        location: this.state.location,
+        location: this.state.location.trim(),
         checkin: this.state.checkin,
         checkout: this.state.checkout,
         roomType: this.state.roomType,
@@ -182,7 +182,7 @@ export default class HomePage extends Component {
     console.log(this.props.location)
     console.log(this.state)
     return (
-      <div>
+      <div  >
         <NavBar></NavBar>
         <div className='container-fluid' style={{ "margin": "0px", "padding": "0px" }}>
           <div className='row d-flex justify-content-center' style={{ "marginTop": "50px", "marginLeft": "0px", "marginRight": "0px" }}>

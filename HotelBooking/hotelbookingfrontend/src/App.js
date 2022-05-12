@@ -14,11 +14,12 @@ import HotelLandingPage from './Components/HotelComponents/HotelLandingPage';
 import CheckOutPage from './Components/CheckOutPage';
 import LandingPage from './Components/LandingPage';
 import HotelRegistration from './Components/HotelRegistration'
+import adminLogin from './Components/adminLogin';
 
 function App() {
   return (
 
-    <div className="App">
+    <div className="App" >
       <Router>
           <Switch>
           <Route exact path="/" component = {LandingPage} ></Route>
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/landing" ><HotelLandingPage></HotelLandingPage></Route>
           <Route exact path = "/Checkout"component = {CheckOutPage} ></Route>
           <Route exact path = "/Home" component={HomePage}></Route>
+          <Route exact path = "/Admin" component={adminLogin}></Route>
           </Switch>
       </Router>
     </div>
