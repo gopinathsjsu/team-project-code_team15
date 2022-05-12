@@ -6,15 +6,15 @@ team-project-code_team15 created by GitHub Classroom
 1. Sai Abhiram Atluri
 2. Sai Harsha Anirudh Garre
 3. Anuhya Gankidi (015897323)
-4. Manikanta Tanniru
+4. Manikanta Tanniru (015947425)
 
 #### Team Contributions: 
 1. Sai Abhiram Atluri
 2. Sai Harsha Anirudh Garre
 3. Anuhya Gankidi (015897323)
-4. Manikanta Tanniru
+4. Manikanta Tanniru (015947425)
 
-#### git repo: 
+### git repo: 
 https://github.com/gopinathsjsu/team-project-code_team15
 
 #### project board: 
