@@ -108,20 +108,20 @@ export default function HotelDialog(props) {
                 </BootstrapDialogTitle>
                 <DialogContent dividers style={{ "height": "400px", "width": "800px" }}>
                     <Typography gutterBottom align='center' >
-                        <img src='https://askqbookindiastorage.blob.core.windows.net/hotelsaandresorts-19177/dc83bb31-9a7b-4ee1-98f4-878909a5d054-preview.jpg' style={{ "height": "300px", "width": "600px" }}></img>
+                        <img src={props.picture} style={{ "height": "300px", "width": "600px" }}></img>
                     </Typography>
                     <Typography gutterBottom>
                     
                     </Typography>
                     <Typography gutterBottom>
-                        <label for ="options">Select additional Eminities for all the rooms</label>
-                        <FormGroup name = "options" onChange={(e)=>onCheckBoxChange(e)} >
-                            <FormControlLabel onClick={(e)=>{onNoneChecked(e)}} control={<Checkbox defaultChecked value="None" />} label="None" />
-                            <FormControlLabel  control={<Checkbox value="Daily Continental Breakfast"/>} label="Daily Continental Breakfast"/>
-                            <FormControlLabel  control={<Checkbox value="Access to fitness room"/>} label="Access to fitness room"/>
-                            <FormControlLabel  control={<Checkbox value="Daily Parking"/>} label="Daily Parking"/>
-                            <FormControlLabel  control={<Checkbox value="All meals included (Breakfast, Lunch, Dinner)"/>} label="All meals included (Breakfast, Lunch, Dinner)"/>
-                        </FormGroup>
+                        <label for ="options">Amenities available in the Hotel</label>
+                        <ul name = "options" onChange={(e)=>onCheckBoxChange(e)} >
+                         
+                            <li >Daily Continental Breakfast</li>
+                            <li >Access to fitness room"</li>
+                            <li>Daily Parking</li>
+                            <li>All meals included (Breakfast, Lunch, Dinner)</li>
+                        </ul>
                     </Typography>
                 </DialogContent>
                 <DialogActions>
@@ -133,6 +133,4 @@ export default function HotelDialog(props) {
             </BootstrapDialog>
         </div>
     );
-
-
 }
