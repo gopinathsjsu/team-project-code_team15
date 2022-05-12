@@ -1,7 +1,7 @@
 var pool = require('./../Database/db')
-const SINGLE=10
-const DOUBLE=15
-const SUITE=25
+const SINGLE=1
+const DOUBLE=3
+const SUITE=5
 /**
  * Add rewards to be used when making new reservation
  */

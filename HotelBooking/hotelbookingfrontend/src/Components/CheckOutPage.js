@@ -14,7 +14,10 @@ export default class CheckOutPage extends Component {
       eminitiesTracker: {},
       selectedRooms: [],
       totalPrice: 0,
-      BookSuccess:false
+      BookSuccess:false,
+      rewardsAvailable:0,
+      displayRewards:false,
+      c_id:""
     }
   }
   componentDidMount(props) {
@@ -45,7 +48,8 @@ export default class CheckOutPage extends Component {
     Promise.all(promises).then(() => {
       this.setState({
         eminitiesTracker: eminitiesTracker,
-        selectedRooms: selectedRooms
+        selectedRooms: selectedRooms,
+        c_id:searchDetails.c_id
       })
       console.log(eminitiesTracker)
     }).then(() => {
@@ -128,6 +132,11 @@ var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 console.log(this.props.location.state.item.hotelId)
 today = mm + '/' + dd + '/' + yyyy;
+  if(this.state.displayRewards == true){
+   axios.get(`http://localhost:3001/rewards/useRewards/${this.state.c_id}`).then(res=>{
+     console.log(res)
+   })
+  }
   axios.post('http://localhost:3001/bookings',{
     custId:searchDetails.c_id,
     hotelId:this.props.location.state.item.hotelId,
@@ -149,9 +158,35 @@ today = mm + '/' + dd + '/' + yyyy;
    
   })
   .catch(err=>{console.log(err)})
+ }
 
+ displayRewards = ()=>{
 
-  
+   axios.get(`http://localhost:3001/rewards/${this.state.c_id}`).then((res)=>{
+
+   if(this.state.displayRewards == true){
+     this.calculateTotalPrice()
+     this.setState({
+      displayRewards:!this.state.displayRewards,
+     })
+   }else{
+    if(res.data[0].rewards >10){
+      this.setState({
+        displayRewards:!this.state.displayRewards,
+        rewardsAvailable:res.data[0].rewards,
+        totalPrice:this.state.totalPrice-res.data[0].rewards>0?this.state.totalPrice-res.data[0].rewards:0
+       })
+     }else{
+      this.setState({
+        displayRewards:!this.state.displayRewards,
+        rewardsAvailable:"Not Enough Rewards",
+       })
+     }
+
+   }
+
+   })
+
 
  }
 
@@ -163,7 +198,7 @@ today = mm + '/' + dd + '/' + yyyy;
       <div>
         <NavBar></NavBar>
         <div className='container-fluid' style={this.standardStyle}>
-          <div className='row'>
+          <div className='row' style={this.standardStyle}>
             <div className='col-md-7' style={{ ...this.standardStyle, overflowY: 'scroll' }}>
               <div className='row' style={this.standardStyle} >
                 <center style={{ "marginTop": "20px" }}><h5>{this.props.location.state.item.hotelName}</h5></center>
@@ -183,13 +218,20 @@ today = mm + '/' + dd + '/' + yyyy;
                     <td>{this.state.totalPrice}</td>
                   </tr>
                 </table>
+                {/* <div>
+                  <h7 style={{"marginRight":"168px"}}>Total Rewards: 300</h7>
+                </div> */}
                 <div style={{marginTop:"30px"}}>
+
                 <label for = 'Rewards'>Use My Rewards</label>
-                <Checkbox name='Rewards'></Checkbox>
-                <Button onClick = {()=>{this.bookRooms()}} style={{"width":"83px","marginLeft":"78px"}}>Book</Button>
+                <Checkbox name='Rewards' onClick={()=>{this.displayRewards()}}></Checkbox>
+                <Button onClick = {()=>{this.bookRooms()}} style={{"width":"83px","marginLeft":"78px"}}>Book</Button><br/>
+                
                 </div>
             
               </center>
+              {this.state.displayRewards == true?<h7 style={{"marginLeft":"136px"}}>Total Rewards available: {this.state.rewardsAvailable}</h7>:""}
+              
 
             </div>
 

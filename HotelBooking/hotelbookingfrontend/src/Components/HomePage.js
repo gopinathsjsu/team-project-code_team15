@@ -28,7 +28,7 @@ export default class HomePage extends Component {
       roomType: "single",
       noOfRooms: 0,
       noOfGuests: 0,
-      c_id: 1,
+      c_id: 0,
       today: ""
 
     }
@@ -40,8 +40,10 @@ export default class HomePage extends Component {
     today.setDate(today.getDate() + 1)
     let today2 = today.toISOString().split('T')[0]
     console.log(today2)
+    let c_id = window.sessionStorage.getItem("c_id")
     this.setState({
-      today: today2
+      today: today2,
+      c_id:c_id
     })
 
   }
@@ -49,7 +51,7 @@ export default class HomePage extends Component {
   searchHotels = () => {
     if (this.validate() == true) {
       axios.post("http://localhost:3001/search", {
-        location: this.state.location,
+        location: this.state.location.trim(),
         checkin: this.state.checkin,
         checkout: this.state.checkout,
         roomType: this.state.roomType,
@@ -57,6 +59,9 @@ export default class HomePage extends Component {
         noOfGuests: this.state.noOfGuests
       }).then(resp => {
         console.log(resp)
+        if(resp.data.groupedHotel.length==0){
+          alert("Invalid Search Criteria")
+        }
         this.setState({
           hotelList: resp.data.groupedHotel
         })
@@ -69,6 +74,7 @@ export default class HomePage extends Component {
         window.sessionStorage.setItem("searchData", JSON.stringify(searchdata))
       }).catch(err => {
         console.log(err)
+        alert("Invalid Search. Please check your inputs")
       })
 
     }
@@ -78,7 +84,7 @@ export default class HomePage extends Component {
 
   validate = () => {
 
-    var letters = /^[A-Za-z]+$/
+    var letters = /^[a-zA-Z ]*$/
     if (this.state.noOfGuests <= 0 || this.state.noOfRooms <= 0) {
 
       alert("Invalid Number of Guests or Invalid Number of Rooms")
@@ -173,9 +179,10 @@ export default class HomePage extends Component {
   }
 
   render() {
+    console.log(this.props.location)
     console.log(this.state)
     return (
-      <div>
+      <div  >
         <NavBar></NavBar>
         <div className='container-fluid' style={{ "margin": "0px", "padding": "0px" }}>
           <div className='row d-flex justify-content-center' style={{ "marginTop": "50px", "marginLeft": "0px", "marginRight": "0px" }}>

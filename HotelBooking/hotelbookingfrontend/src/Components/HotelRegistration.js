@@ -4,6 +4,7 @@ import '../App.css';
 import NavBar from '../NavBar';
 // import './Register.css';
 import axios from 'axios'
+import { Redirect } from 'react-router-dom';
 function HotelRegistration() {
 
   // const standardStyle = { 
@@ -15,6 +16,7 @@ function HotelRegistration() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
+  const [redirect,setRedirect] = useState(false)
 
   const handleInputChange = (e) => {
     
@@ -48,6 +50,7 @@ function HotelRegistration() {
         phoneNumber: 8877225511
       }).then((res) => {
          console.log(res)
+         setRedirect(true)
       }).catch(err=>{
         console.log(err)
       })
@@ -87,7 +90,7 @@ function HotelRegistration() {
   console.log(firstName, lastName, email, password, confirmPassword);
   return (
     <div>
-      <NavBar></NavBar>
+      <NavBar myBookingDisplay = {false}></NavBar>
       <div className='container-fluid' style={standardStyle}>
         <div className='row' style={standardStyle}>
           <div className='col-md-2' style={standardStyle}>
@@ -106,18 +109,11 @@ function HotelRegistration() {
               <input type="password" id='password'  class="form-control mb-4" placeholder='Password' onChange={(e)=>{handleInputChange(e)}}></input>
               <input type="password" id='confirmPassword'  class="form-control mb-4" placeholder='Confirm Password' onChange={(e)=>{handleInputChange(e)}}></input>
               <div class="d-flex justify-content-between">
-                <div>
-
-                </div>
-                <div>
-
-                </div>
+    
               </div>
               <center>
                 <button class="btn btn-info btn-block my-4" type="button" onClick={()=>{handleSubmit()}}>Register</button>
               </center>
-
-
               <div class="text-center">
 
               </div>
@@ -128,6 +124,7 @@ function HotelRegistration() {
           </div>
         </div>
       </div>
+      {redirect == true?<Redirect to={{pathname:"/"}}></Redirect>:""}
     </div>
   )
 }
