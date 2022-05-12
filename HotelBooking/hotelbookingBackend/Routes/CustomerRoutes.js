@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var pool = require('./../Database/db')
 router.post("/getPricing",async(req,res)=>{
-    let {custId,hotelId,roomId,checkIn,checkOut,breakfast,fitnessRoom,swimmingPool,parking,allMeals}=req.body;
+    let {custID,hotelId,roomId,checkIn,checkOut,breakfast,fitnessRoom,swimmingPool,parking,allMeals}=req.body;
     let finalPrice=[];
     
     // for(let i=0;i<roomIds.length;i++){
@@ -19,8 +19,8 @@ router.post("/getPricing",async(req,res)=>{
         let weekendPrice=getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut);
         let holidaySeasonPrice=getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut);
         let amenitiesPrice=getPricingBasedOnAmenities(diffDays,breakfast,fitnessRoom,swimmingPool,parking,allMeals)
-        price+=amenitiesPrice+holidaySeasonPrice+weekendPrice;
-        // price+=getPricingBasedOnCustomerLoyalty(basePrice,custId);
+        let customerLoyaltyDiscount=await getPricingBasedOnCustomerLoyalty(basePrice,custID);
+        price+=amenitiesPrice+holidaySeasonPrice+weekendPrice+customerLoyaltyDiscount;
         
         finalPrice.push({roomId:roomId,basePrice,totalPrice:price})
     // }
@@ -30,6 +30,7 @@ router.post("/getPricing",async(req,res)=>{
         weekendPrice,
         holidaySeasonPrice,
         amenitiesPrice,
+        customerLoyaltyDiscount,
         totalPrice:price})
 });
  function isWeekend(date1, date2) {
@@ -80,11 +81,21 @@ function getPricingBasedOnAmenities(diffDays,breakfast,fitnessRoom,swimmingPool,
         increment+=diffDays*8;
     return increment;
 }
-function getPricingBasedOnCustomerLoyalty(basePrice,custId){
+async function getPricingBasedOnCustomerLoyalty(basePrice,custId){
     let decrement=0;
     /**
      * Get rewards points from table and do if else for some range and provide discount based on it
+     * 
      */
-    return decrement;
+    let query=`select rewards from Customer where customerId=?;`;
+    let result=await pool.query(query,[custId])
+    let rewards=result[0][0]?.rewards
+    if(rewards>40 && rewards<=60){
+        decrement=basePrice*0.05
+    }else if(rewards>60 && rewards<= 80){
+        decrement= basePrice*0.10;
+    }
+    console.log(result[0][0]?.rewards)
+    return decrement*-1;
 }
 module.exports=router
