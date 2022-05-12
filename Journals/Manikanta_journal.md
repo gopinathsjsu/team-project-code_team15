@@ -1,4 +1,4 @@
-**Manikanta Tanniru
+Manikanta Tanniru
 
 Weekly Scrum Report
 Sprint 1: - 3/17/2022 - 3/20/2022
