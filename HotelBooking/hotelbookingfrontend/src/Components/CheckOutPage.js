@@ -18,7 +18,8 @@ export default class CheckOutPage extends Component {
       BookSuccess:false,
       rewardsAvailable:0,
       displayRewards:false,
-      c_id:""
+      c_id:"",
+      c_name:""
     }
   }
   componentDidMount(props) {
@@ -29,6 +30,7 @@ export default class CheckOutPage extends Component {
     console.log(selectedRooms)
     let promises = []
     let eminitiesTracker = {}
+    let c_name = sessionStorage.getItem("c_name")
     for (let i = 0; i < selectedRooms.length; i++) {
       promises.push(axios.post(`${SERVER_URL}/customer/getPricing`, {
         custID: searchDetails.c_id,
@@ -50,7 +52,8 @@ export default class CheckOutPage extends Component {
       this.setState({
         eminitiesTracker: eminitiesTracker,
         selectedRooms: selectedRooms,
-        c_id:searchDetails.c_id
+        c_id:searchDetails.c_id,
+        c_name:c_name
       })
       console.log(eminitiesTracker)
     }).then(() => {
@@ -107,7 +110,7 @@ export default class CheckOutPage extends Component {
       return <tr>
         <td style={{ "paddingRight": "50px" }}>Room No {this.state.eminitiesTracker[item].roomNo}</td>
         <td style={{ "paddingRight": "30px" }}>{this.state.eminitiesTracker[item].roomType} Room</td>
-        <td>{this.state.eminitiesTracker[item].price}</td>
+        <td>{this.state.eminitiesTracker[item].price} $</td>
       </tr>
 
     })
@@ -197,7 +200,7 @@ today = mm + '/' + dd + '/' + yyyy;
     console.log(this.state)
     return (
       <div>
-        <NavBar></NavBar>
+        <NavBar  Name ={this.state.c_name}></NavBar>
         <div className='container-fluid' style={this.standardStyle}>
           <div className='row' style={this.standardStyle}>
             <div className='col-md-7' style={{ ...this.standardStyle, overflowY: 'scroll' }}>
@@ -216,7 +219,7 @@ today = mm + '/' + dd + '/' + yyyy;
                   <tr>
                     <td style={{ "paddingRight": "50px" }}></td>
                     <td style={{ "paddingRight": "50px" }}>Total Price</td>
-                    <td>{this.state.totalPrice}</td>
+                    <td>{this.state.totalPrice} $</td>
                   </tr>
                 </table>
                 {/* <div>

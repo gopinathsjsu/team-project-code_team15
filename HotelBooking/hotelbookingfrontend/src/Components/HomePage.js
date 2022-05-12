@@ -30,7 +30,8 @@ export default class HomePage extends Component {
       noOfRooms: 0,
       noOfGuests: 0,
       c_id: 0,
-      today: ""
+      today: "",
+      c_name:""
 
     }
   }
@@ -42,9 +43,11 @@ export default class HomePage extends Component {
     let today2 = today.toISOString().split('T')[0]
     console.log(today2)
     let c_id = window.sessionStorage.getItem("c_id")
+    let c_name = sessionStorage.getItem("c_name")
     this.setState({
       today: today2,
-      c_id:c_id
+      c_id:c_id,
+      c_name:c_name
     })
 
   }
@@ -61,7 +64,7 @@ export default class HomePage extends Component {
       }).then(resp => {
         console.log(resp)
         if(resp.data.groupedHotel.length==0){
-          alert("Invalid Search Criteria")
+          alert("No rooms available for those dates")
         }
         this.setState({
           hotelList: resp.data.groupedHotel
@@ -74,8 +77,9 @@ export default class HomePage extends Component {
         }
         window.sessionStorage.setItem("searchData", JSON.stringify(searchdata))
       }).catch(err => {
-        console.log(err)
-        alert("Invalid Search. Please check your inputs")
+        console.log()
+        console.log(err.data)
+        alert(`Invalid Search. ${err.response.data.message}`)
       })
 
     }
@@ -106,8 +110,7 @@ export default class HomePage extends Component {
 
   loadHotels = () => {
 
-    //  let hotelList =testdata.groupedHotel 
-    //  console.log(hotelList)
+   
     return this.state.hotelList.map((item, key) => {
       return <li style={{ "marginBottom": "20px" }}><HotelCards item={item[0]} key={key} rooms={item} c_id={this.state.c_id}></HotelCards></li>
     })
@@ -184,7 +187,7 @@ export default class HomePage extends Component {
     console.log(this.state)
     return (
       <div  >
-        <NavBar></NavBar>
+        <NavBar Name ={this.state.c_name}></NavBar>
         <div className='container-fluid' style={{ "margin": "0px", "padding": "0px" }}>
           <div className='row d-flex justify-content-center' style={{ "marginTop": "50px", "marginLeft": "0px", "marginRight": "0px" }}>
             <div className='col-md-1'>

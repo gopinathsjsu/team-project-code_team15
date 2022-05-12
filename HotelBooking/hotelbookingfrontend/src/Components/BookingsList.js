@@ -33,6 +33,7 @@ export default class BookingsList extends Component {
     this.setState({
       openEdit:false
     })
+    this.props.updateList()
   }
 
   render() {
