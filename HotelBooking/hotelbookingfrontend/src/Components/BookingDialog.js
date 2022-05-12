@@ -167,6 +167,9 @@ export default function HotelDialog(props) {
                     }else{
                         alert("Hotel booked in selected dates")
                     }
+                }).catch((err)=>{
+                    console.log(err)
+                    alert(`Invalid Search Criteria. ${err.response.data.msg}`)
                 })
             }else{
                 alert("Invalid Dates")
