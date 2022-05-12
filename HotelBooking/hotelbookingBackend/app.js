@@ -9,14 +9,25 @@ const roomsRouter=require("./Routes/RoomsRoutes")
 const hotelsRouter=require("./Routes/HotelRoutes")
 const rewardsRouter=require("./Routes/RewardsRoutes")
 const userRouter=require('./Routes/UserRoutes')
+var os = require('os');
+
+var interfaces = os.networkInterfaces();
+var addresses = [];
+for (var k in interfaces) {
+    for (var k2 in interfaces[k]) {
+        var address = interfaces[k][k2];
+        if (address.family === 'IPv4' && !address.internal) {
+            addresses.push(address.address);
+        }
+    }
+}
+
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 app.use(cors());
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
-app.get('/', function (req, res) {
-  res.send('Welcome to Hotel Reservation Backend API');
-});
+
 // const mysql = require("mysql2")
 
 // const conn = mysql.createConnection(
@@ -38,8 +49,11 @@ app.get('/', function (req, res) {
 
 // })
 var port=normalizePort(process.env.PORT || '3001');
-app.listen(port, function () {
+var server=app.listen(port, function () {
   console.log('Server Listening on port '+port);
+});
+app.get('/', function (req, res) {
+  res.send('Welcome to Hotel Reservation Backend API '+JSON.stringify(address));
 });
 app.use("/customer",customerRouter)
 app.use('/bookings',bookingsRouter)

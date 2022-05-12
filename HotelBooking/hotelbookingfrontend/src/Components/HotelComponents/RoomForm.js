@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { Button } from '@mui/material'
 import axios from 'axios'
 import { SERVER_URL } from '../../config'
+import * as yup from 'yup'
 export default class RoomForm extends Component {
     constructor(props) {
       super(props)
@@ -18,6 +19,14 @@ export default class RoomForm extends Component {
       basePrice:0,
       roomNo:""
    }
+   roomvalidation=yup.object({
+    hotelId:yup.string().required('Hotel Name is required').min(1,'Hotel Name is required'),
+    rType:yup.string().required('Room type is required').min(1,'Room type is required'),
+    rCapacity:yup.number().required('Max no of guests is required').min(1,'Min no of guests should be 1'),
+    basePrice:yup.number().required('Base price required').min(1,'Base price should be greater than 0'),
+    roomNo:yup.string().required('Room No is required')
+   })
+
    sendFormDetails(values){
      console.log(values)
      //make api call to save and then close
@@ -36,13 +45,15 @@ export default class RoomForm extends Component {
      let hotels=await axios.get(url);
      this.setState({hotelList:hotels.data});
    }
+
+
   render() {
     return (
       <div>
           <Formik
           initialValues={this.intialValues}
           onSubmit={(values) => { this.sendFormDetails(values) }}
-          validationSchema={this.validation}
+          validationSchema={this.roomvalidation}
           >
               <Form>
               <label className='form-label'>Hotel Name</label>
@@ -52,6 +63,7 @@ export default class RoomForm extends Component {
                       return <option value={hotel.hotelId}>{hotel.hotelName}</option>
                     })}
                   </Field>
+                  <ErrorMessage name="hotelId" className="text-danger" component="div"></ErrorMessage>
 
                   <label className='form-label'>Room Type</label>
                   <Field as="select"  className='form-select' name="rType">
@@ -60,14 +72,19 @@ export default class RoomForm extends Component {
                     <option value="double">Double Room</option>
                     <option value="suite">Suite Room</option>
                   </Field>
+                  <ErrorMessage name="rType" className="text-danger" component="div"></ErrorMessage>
+
                   <label className='form-label'>Max No of Guests per room</label>
                   <Field type="number" className='form-control'min="1" name="rCapacity"></Field>
+                  <ErrorMessage name="rCapacity" className="text-danger" component="div"></ErrorMessage>
 
                   <label className='form-label'>Room No</label>
                   <Field type="text" className='form-control'min="1" name="roomNo"></Field>
+                  <ErrorMessage name="roomNo" className="text-danger" component="div"></ErrorMessage>
 
                   <label className='form-label'>Base Price</label>
                   <Field type="number" className='form-control' name="basePrice"></Field>
+                  <ErrorMessage name="basePrice" className="text-danger" component="div"></ErrorMessage>
                   <hr></hr>
                   <button autoFocus onClick={()=>this.props.close()} className="btn btn-primary" type="button">
                             Close
