@@ -9,6 +9,10 @@ team-project-code_team15 created by GitHub Classroom
 4. Manikanta Tanniru
 
 #### Team Contributions: 
+1. Sai Abhiram Atluri
+2. Sai Harsha Anirudh Garre
+3. Anuhya Gankidi (015897323)
+4. Manikanta Tanniru
 
 #### git repo: 
 https://github.com/gopinathsjsu/team-project-code_team15
@@ -29,4 +33,14 @@ https://github.com/gopinathsjsu/team-project-code_team15/projects/1
 8. Edit the booking.
 9. Cancel a booking.
 10. Hotel can add and update rooms.
+
+#### Diagrams:
+##### Architechture Diagram:
+<img width="510" alt="archd" src="https://user-images.githubusercontent.com/28936164/168076194-83dca744-8fc8-46b5-90a1-82120627056a.png">
+
+##### Deployement Diagram:
+
+
+##### Component Diagram:
+
 
