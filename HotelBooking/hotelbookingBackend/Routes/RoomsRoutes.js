@@ -11,7 +11,8 @@ router.get("/all",async(req,res)=>{
 })
 router.post("/",async(req,res)=>{
     let {basePrice,hotelId,rCapacity,rType,roomNo}=req.body;
-    // let query=`insert into Rooms(hotelId,roomNo,basePrice,roomType,roomCapacity) values(?,?,?,?,?)`;
-    // let result=await pool.query(query,[])
+    let query=`insert into Rooms(hotelId,roomNo,basePrice,roomType,roomCapacity) values(?,?,?,?,?);select LAST_INSERT_ID() as roomId`;
+    let result=await pool.query(query,[hotelId,roomNo,basePrice,rType,rCapacity]);
+    res.status(200).send({roomId:result[0][1][0]?.roomId})
 })
 module.exports=router

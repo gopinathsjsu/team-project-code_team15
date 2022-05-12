@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { Button } from '@mui/material'
 import axios from 'axios'
+import {SERVER_URL} from './../../config'
 export default class HotelForm extends Component {
     constructor(props) {
       super(props)
@@ -14,10 +15,14 @@ export default class HotelForm extends Component {
      hotelName:"",
      city:""
    }
-   sendFormDetails=(values)=>{
+   sendFormDetails(values){
      console.log(values)
      //make api call to save and then close
-     this.props.close(true);
+     let url=`${SERVER_URL}/hotels`
+     axios.post(url,values).then((res)=>{
+       alert("Hotel added succesfully")
+       this.props.close(true);
+     })
    }
   //  async componentDidMount(){
   //    let url=`http://localhost:3001/hotels/all`;
@@ -29,8 +34,8 @@ export default class HotelForm extends Component {
       <div>
           <Formik
           initialValues={this.intialValues}
-          onSubmit={(values) => { this.sendFormDetails(values) }}
-          validationSchema={this.validation}
+          onSubmit={(values)=>this.sendFormDetails(values) }
+          
           >
               <Form>
               <label className='form-label'>Hotel Name</label>
@@ -41,13 +46,15 @@ export default class HotelForm extends Component {
 
                   
                   <hr></hr>
-                  <button autoFocus onClick={this.props.close} className="btn btn-primary">
+                  <button autoFocus onClick={this.props.close} type="button" className="btn btn-primary">
                             Close
                         </button>
-                        <button onClick={this.sendFormDetails} autoFocus type="submit" className="btn btn-success">
+                        <button  autoFocus type="submit" className="btn btn-success">
                             Add
                         </button>
               </Form>
+
+              
           </Formik>
       </div>
     )

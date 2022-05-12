@@ -30,34 +30,33 @@ export class HotelRoomsList extends Component {
         let result=await axios.get(`http://localhost:3001/rooms/all`);
         let hotelIds=result.data?.hotelIds;
         this.setState({hotelList:hotelIds});
-        
-        
     }
-    handleAddNewRoom = () => {
+    handleAddNewRoom ()  {
         console.log("add new room")
         this.setState({ isAddDaialogOpen: true })
     }
-    handleAddDailogClose = (isAdded) => {
+    handleCloseRoomDialog () {
         console.log("Closing add new room")
-        if(isAdded===false)
-            this.setState({ isAddDaialogOpen: false })
-        else if(isAdded===true)
-            // set state so that list is updated and re rendered
-            this.setState({ isAddDaialogOpen: false })
-    
+        this.setState({ isAddDaialogOpen: false })
     }
-    handleAddHotel=()=>{
+    async handleSaveRoom(){
+        let result=await axios.get(`http://localhost:3001/rooms/all`);
+        let hotelIds=result.data?.hotelIds;
+        this.setState({hotelList:hotelIds,isAddDaialogOpen:false});
+    }
+
+
+    handleAddHotel(){
         this.setState({ isAddHotelDaialogOpen: true })
     }
-    handleAddHotelDailogClose = (isAdded) => {
-        console.log("Closing add new room")
-        if(isAdded===false)
-            this.setState({ isAddHotelDaialogOpen: false })
-        else if(isAdded===true)
-            // set state so that list is updated and re rendered
-            this.setState({ isAddHotelDaialogOpen: false })
-    
+    handleCloseHotelDialog ()  {
+        console.log("Closing add new Hotel")
+        this.setState({ isAddHotelDaialogOpen: false })
     }
+    handleSaveHotel(){
+        this.setState({ isAddHotelDaialogOpen: false })
+    }
+
     fixedView={
             top: "12%",
             bottom:0,
@@ -98,28 +97,28 @@ export class HotelRoomsList extends Component {
             <div className="container">
                 HotelRoomsList
                 <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-                    <button className='btn-primary' onClick={this.handleAddNewRoom}>Add new Room</button>
+                    <button className='btn-primary' onClick={()=>this.handleAddNewRoom()}>Add new Room</button>
                     <div style={this.space}></div>
-                    <button className='btn-primary' onClick={this.handleAddHotel}>Add New Hotel</button>
+                    <button className='btn-primary' onClick={()=>this.handleAddHotel()}>Add New Hotel</button>
                 </div>
                 <Dialog
                     fullScreen={false}
                     open={this.state.isAddDaialogOpen}
-                    onClose={this.handleAddDailogClose}
+                    
                     aria-labelledby="responsive-dialog-title"
                 >
                     <DialogTitle id="responsive-dialog-title">
                         {"Add New Room"}
                     </DialogTitle>
                     <DialogContent>
-                        <RoomForm isEdit="false" close={this.handleAddDailogClose}></RoomForm>
+                        <RoomForm isEdit="false" close={()=>this.handleCloseRoomDialog(false)} addAndClose={()=>this.handleSaveRoom()}></RoomForm>
                         </DialogContent>
                 </Dialog>
 
                 <Dialog
                     fullScreen={false}
                     open={this.state.isAddHotelDaialogOpen}
-                    onClose={this.handleAddHotel}
+                    
                     aria-labelledby="responsive-dialog-title"
                 >
                     <DialogTitle id="responsive-dialog-title">
@@ -127,7 +126,7 @@ export class HotelRoomsList extends Component {
                     </DialogTitle>
                     <DialogContent>
                         
-                        < HotelForm isEdit="false" close={this.handleAddHotelDailogClose}></HotelForm>
+                        < HotelForm isEdit="false" close={()=>this.handleCloseHotelDialog()} addAndClose={()=>this.handleSaveHotel()}></HotelForm>
                         </DialogContent>
                 </Dialog>
                 <div className='row mt-2'>

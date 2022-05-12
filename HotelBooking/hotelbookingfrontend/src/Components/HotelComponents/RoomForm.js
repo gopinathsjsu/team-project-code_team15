@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { Button } from '@mui/material'
 import axios from 'axios'
+import { SERVER_URL } from '../../config'
 export default class RoomForm extends Component {
     constructor(props) {
       super(props)
@@ -17,10 +18,18 @@ export default class RoomForm extends Component {
       basePrice:0,
       roomNo:""
    }
-   sendFormDetails=(values)=>{
+   sendFormDetails(values){
      console.log(values)
      //make api call to save and then close
-     this.props.close(true);
+     let url=`${SERVER_URL}/rooms`
+     axios.post(url,values).then((res)=>{
+       alert("Room added suceesfully")
+       this.props.addAndClose();
+     }).catch((err)=>{
+       alert("Error adding room, please try again later")
+       this.props.close()
+     })
+     
    }
    async componentDidMount(){
      let url=`http://localhost:3001/hotels/all`;
@@ -60,10 +69,10 @@ export default class RoomForm extends Component {
                   <label className='form-label'>Base Price</label>
                   <Field type="number" className='form-control' name="basePrice"></Field>
                   <hr></hr>
-                  <button autoFocus onClick={this.props.close} className="btn btn-primary">
+                  <button autoFocus onClick={()=>this.props.close()} className="btn btn-primary" type="button">
                             Close
                         </button>
-                        <button onClick={this.sendFormDetails} autoFocus type="submit" className="btn btn-success">
+                        <button  autoFocus type="submit" className="btn btn-success">
                             Add
                         </button>
               </Form>
