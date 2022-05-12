@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap'
 import NavBar from '../NavBar'
 import CheckoutCard from './CheckoutCard'
 import CheckoutDialog from './CheckoutDialog'
+import { SERVER_URL } from '../config';
 export default class CheckOutPage extends Component {
   constructor(props) {
     super(props)
@@ -29,7 +30,7 @@ export default class CheckOutPage extends Component {
     let promises = []
     let eminitiesTracker = {}
     for (let i = 0; i < selectedRooms.length; i++) {
-      promises.push(axios.post('http://localhost:3001/customer/getPricing', {
+      promises.push(axios.post(`${SERVER_URL}/customer/getPricing`, {
         custID: searchDetails.c_id,
         hotelId: this.props.location.state.item.hotelId,
         roomId: selectedRooms[i].roomID,
@@ -68,7 +69,7 @@ export default class CheckOutPage extends Component {
         [roomID]: { ...this.state.eminitiesTracker[roomID], [eminity]: !this.state.eminitiesTracker[roomID][eminity] }
       }
     }, () => {
-      axios.post('http://localhost:3001/customer/getPricing', {
+      axios.post(`${SERVER_URL}/customer/getPricing`, {
         custID: searchDetails.c_id,
         hotelId: this.props.location.state.item.hotelId,
         roomId: roomID,
@@ -133,11 +134,11 @@ var yyyy = today.getFullYear();
 console.log(this.props.location.state.item.hotelId)
 today = mm + '/' + dd + '/' + yyyy;
   if(this.state.displayRewards == true){
-   axios.get(`http://localhost:3001/rewards/useRewards/${this.state.c_id}`).then(res=>{
+   axios.get(`${SERVER_URL}/rewards/useRewards/${this.state.c_id}`).then(res=>{
      console.log(res)
    })
   }
-  axios.post('http://localhost:3001/bookings',{
+  axios.post(`${SERVER_URL}/bookings`,{
     custId:searchDetails.c_id,
     hotelId:this.props.location.state.item.hotelId,
     basePrice:0,
@@ -162,7 +163,7 @@ today = mm + '/' + dd + '/' + yyyy;
 
  displayRewards = ()=>{
 
-   axios.get(`http://localhost:3001/rewards/${this.state.c_id}`).then((res)=>{
+   axios.get(`${SERVER_URL}/rewards/${this.state.c_id}`).then((res)=>{
 
    if(this.state.displayRewards == true){
      this.calculateTotalPrice()

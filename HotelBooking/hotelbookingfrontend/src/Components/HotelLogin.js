@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom';
 import NavBar from '../NavBar'
-
+import { SERVER_URL } from '../config';
 export default class HotelLogin extends Component {
 
   standardStyle = { margin: "0px", padding: "0px" }
@@ -37,7 +37,7 @@ export default class HotelLogin extends Component {
 
   onSubmit = ()=>{
     console.log("heyy")
-    axios.post("http://localhost:3001/users/customer/login",{
+    axios.post(`${SERVER_URL}/users/customer/login`,{
       email:this.state.Email,
       pass:this.state.password
     }).then(res=>{

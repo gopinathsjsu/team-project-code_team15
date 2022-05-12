@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 // import { LocalGasStation } from '@material-ui/icons';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
+import { SERVER_URL } from '../config';
 import {
     BrowserRouter as Router,
     Link,
@@ -111,7 +112,7 @@ export default function HotelDialog(props) {
         setCheckOut(month + "/" + day + "/" + year)  
     }
     useEffect(() => {
-        axios.get(`http://localhost:3001/bookings/${props.item.hotelId}/${props.item.reservationId}}`).then(res => {
+        axios.get(`${SERVER_URL}/bookings/${props.item.hotelId}/${props.item.reservationId}}`).then(res => {
             console.log(res.data)
             setData(res.data)
             let today = new Date()
@@ -153,7 +154,7 @@ export default function HotelDialog(props) {
             newCheckIn:checkIn,
             newCheckOut:checkOut})
             if(validate()){
-                axios.put("http://localhost:3001/bookings",{    custId:props.item.reservationId,
+                axios.put(`${SERVER_URL}/bookings`,{    custId:props.item.reservationId,
                 reservationId:props.item.reservationId,
                 newCheckIn:checkIn,
                 newCheckOut:checkOut}).then(res=>{
@@ -177,7 +178,7 @@ export default function HotelDialog(props) {
             custId:props.item.customerId,
             reservationId:props.item.reservationId
         })
-        axios.delete("http://localhost:3001/bookings",{
+        axios.delete(`${SERVER_URL}/bookings`,{
             data:{custId:props.item.customerId,
             reservationId:props.item.reservationId}
         }).then((res)=>{

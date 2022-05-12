@@ -10,7 +10,8 @@ import Typography from '@mui/material/Typography';
 import HotelCards from './HotelCards';
 import HotelDialog from './HotelDialog';
 import axios from 'axios'
-import { ThumbDownSharp } from '@material-ui/icons';
+
+import { SERVER_URL } from '../config';
 
 
 export default class HomePage extends Component {
@@ -50,7 +51,7 @@ export default class HomePage extends Component {
 
   searchHotels = () => {
     if (this.validate() == true) {
-      axios.post("http://localhost:3001/search", {
+      axios.post(`${SERVER_URL}/search`, {
         location: this.state.location.trim(),
         checkin: this.state.checkin,
         checkout: this.state.checkout,
