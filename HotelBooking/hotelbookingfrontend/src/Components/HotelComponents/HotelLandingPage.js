@@ -73,22 +73,7 @@ export default class HotelLandingPage extends Component {
 
                     <div className="row">
                         {/* fixed-top one */}
-                        <div className="col-sm-4 ">
-                            Photos
-                            <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                                {this.itemData.map((item) => (
-                                    <ImageListItem key={item.img} onClick={()=>console.log("image clicked")}>
-                                        <img
-                                            src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                                            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                            alt={item.title}
-                                            loading="lazy"
-                                        />
-                                    </ImageListItem>
-                                ))}
-                            </ImageList>
-                            {/* <PhotoViewer restId={this.setRestID()} viewBy={this.setViewBy()}></PhotoViewer> */}
-                        </div>
+                        
                         {/* offset-sm-6 two */}
                         <div className="col-sm-8 ">
                             <HotelRoomsList></HotelRoomsList>
