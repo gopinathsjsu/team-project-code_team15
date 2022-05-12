@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
 import NavBar from '../../NavBar'
+import { SERVER_URL } from '../../config'
 
 export class HotelRoomsList extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export class HotelRoomsList extends Component {
         }
     }
     async componentDidMount() {
-        let result=await axios.get(`http://localhost:3001/rooms/all`);
+        let result=await axios.get(`${SERVER_URL}/rooms/all`);
         let hotelIds=result.data?.hotelIds;
         this.setState({hotelList:hotelIds});
     }
@@ -41,7 +42,7 @@ export class HotelRoomsList extends Component {
         this.setState({ isAddDaialogOpen: false })
     }
     async handleSaveRoom(){
-        let result=await axios.get(`http://localhost:3001/rooms/all`);
+        let result=await axios.get(`${SERVER_URL}/rooms/all`);
         let hotelIds=result.data?.hotelIds;
         this.setState({hotelList:hotelIds,isAddDaialogOpen:false});
     }

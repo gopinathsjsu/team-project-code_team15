@@ -41,7 +41,7 @@ export default class RoomForm extends Component {
      
    }
    async componentDidMount(){
-     let url=`http://localhost:3001/hotels/all`;
+     let url=`${SERVER_URL}/hotels/all`;
      let hotels=await axios.get(url);
      this.setState({hotelList:hotels.data});
    }
