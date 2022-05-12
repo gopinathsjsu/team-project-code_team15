@@ -114,19 +114,21 @@ export default function HotelDialog(props) {
                     
                     </Typography>
                     <Typography gutterBottom>
-                        <label for ="options">Amenities available in the Hotel</label>
-                        <ul name = "options" onChange={(e)=>onCheckBoxChange(e)} >
+                        {/* <label for ="options">Amenities available in the Hotel</label> */}
+                        {/* <center> */}
+                        {/* <ul name = "options" onChange={(e)=>onCheckBoxChange(e)} >
                          
                             <li >Daily Continental Breakfast</li>
                             <li >Access to fitness room"</li>
                             <li>Daily Parking</li>
                             <li>All meals included (Breakfast, Lunch, Dinner)</li>
-                        </ul>
+                        </ul> */}
+                        {/* </center> */}
                     </Typography>
                 </DialogContent>
                 <DialogActions>
 
-                    <Link to ={{pathname:"/Checkout", state:{c_id:props.c_id ,rooms:props.rooms,item:props.item }}} >
+                   <Link style={{"marginRight":"300px"}} to ={{pathname:"/Checkout", state:{c_id:props.c_id ,rooms:props.rooms,item:props.item }}} >
                     Proceed to Checkout
                     </Link>
                 </DialogActions>

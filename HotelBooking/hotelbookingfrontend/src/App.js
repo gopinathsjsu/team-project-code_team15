@@ -12,7 +12,7 @@ import ManageBookings from './Components/ManageBookings';
 import CustProfile from './Components/CustProfile';
 import HotelLandingPage from './Components/HotelComponents/HotelLandingPage';
 import CheckOutPage from './Components/CheckOutPage';
-
+import LandingPage from './Components/LandingPage';
 import HotelRegistration from './Components/HotelRegistration'
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
     <div className="App">
       <Router>
           <Switch>
-          <Route exact path="/" component = {HomePage} ></Route>
+          <Route exact path="/" component = {LandingPage} ></Route>
           <Route exact path="/Login" ><HotelLogin></HotelLogin></Route>
           <Route exact path="/Register" ><HotelRegistration /> </Route>
           <Route exact path="/Bookings" ><ManageBookings></ManageBookings></Route> 
