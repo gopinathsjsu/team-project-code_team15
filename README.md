@@ -1,8 +1,7 @@
 # team-project-code_team15
 team-project-code_team15 created by GitHub Classroom
 
-#### Team:
-
+### Team:
 1. Sai Abhiram Atluri
 2. Sai Harsha Anirudh Garre
 3. Anuhya Gankidi (015897323)
@@ -13,6 +12,10 @@ team-project-code_team15 created by GitHub Classroom
 * Harsha - 
 * Anuhya - 
 * Manikanta - 
+
+#### XP Values:
+Feedback and Communication (Weekly status update calls)
+We communicated regularly online and offline. We had status updates twice every week through calls, zoom and whatsapp. 
 
 #### git repo: 
 https://github.com/gopinathsjsu/team-project-code_team15
