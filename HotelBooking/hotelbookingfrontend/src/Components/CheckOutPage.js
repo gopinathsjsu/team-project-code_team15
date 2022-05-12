@@ -163,7 +163,7 @@ today = mm + '/' + dd + '/' + yyyy;
       <div>
         <NavBar></NavBar>
         <div className='container-fluid' style={this.standardStyle}>
-          <div className='row'>
+          <div className='row' style={this.standardStyle}>
             <div className='col-md-7' style={{ ...this.standardStyle, overflowY: 'scroll' }}>
               <div className='row' style={this.standardStyle} >
                 <center style={{ "marginTop": "20px" }}><h5>{this.props.location.state.item.hotelName}</h5></center>

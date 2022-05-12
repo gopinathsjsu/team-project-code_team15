@@ -24,10 +24,6 @@ import {
 import { useEffect } from 'react';
 import axios from 'axios'
 
-
-
-
-
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),

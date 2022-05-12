@@ -1,12 +1,70 @@
+import axios from 'axios';
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import NavBar from '../NavBar'
 
 export default class HotelLogin extends Component {
 
   standardStyle = { margin: "0px", padding: "0px" }
+  
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      Email:"",
+      password:"",
+      RedirectToHome:false,
+      custID:""
+    }
+  }
+
+  onChangeEmail = (e)=>{
+    console.log(e.target.value)
+     this.setState({
+       Email:e.target.value
+     })
+  }
+  onChangePassword = (e)=>{
+    console.log(e.target.value)
+    this.setState({
+      password:e.target.value
+    })
+  }
+
+  componentDidMount(){
+
+  }
+
+  onSubmit = ()=>{
+    console.log("heyy")
+    axios.post("http://localhost:3001/users/customer/login",{
+      email:this.state.Email,
+      pass:this.state.password
+    }).then(res=>{
+      console.log(res)
+      if(res.data.isAuthenticated == true){
+
+
+        window.sessionStorage.setItem("c_id",res.data.custId)
+        this.setState({
+          custID:res.data.custId
+        })
+        this.setState({
+          RedirectToHome:true,
+        })
+
+        // alert("Invalid details")
+      }
+       
+    }).catch(err=>{
+      alert("Invalid credentials")
+      console.log(err)
+    })
+  }
 
   render() {
+    console.log(this.props.location)
+    console.log(this.state)
     return (
       <div>
         <NavBar></NavBar>
@@ -15,36 +73,28 @@ export default class HotelLogin extends Component {
           <div className='row'>
             <div className='col-md-2'></div>
             <div className='col-md-8'>
-            <form class="border border-light p-5" style={{"marginTop":"80px"}}>
+              <form class="border border-light p-5" style={{ "marginTop": "80px" }}>
 
-<p class="h4 mb-4 ">Sign in</p>
+                <p class="h4 mb-4 ">Sign in</p>
 
-<input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail"/>
+                <input type="email" name="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" onChange={(e)=>{this.onChangeEmail(e)}} />
 
-<input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password"/>
+                <input type="password" name = "password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" onChange={(e)=>{this.onChangePassword(e)}} />
 
-<div class="d-flex justify-content-between">
-    <div>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember"/>
-            <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
-        </div>
-    </div>
-    <div>
-        <a href="">Forgot password?</a>
-    </div>
-</div>
+                <div class="d-flex justify-content-between">
+        
+                </div>
 
-<button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+                <button class="btn btn-info btn-block my-4" type="button" onClick={()=>{this.onSubmit()}} >Sign in</button>
 
-<div class="text-center">
-    <p>Not a member?
-        <a href="/Register">Register</a>
-    </p>
+                <div class="text-center">
+                  <p>Not a member?
+                    <a href="/Register">Register</a>
+                  </p>
 
 
-</div>
-</form>
+                </div>
+              </form>
             </div>
             <div className='col-md-2'></div>
           </div>
@@ -53,6 +103,7 @@ export default class HotelLogin extends Component {
         {/* <h5>        
           HotelLogin
         </h5>     */}
+        {this.state.RedirectToHome == true?<Redirect to={{pathname:"/Home", state : {c_id:this.state.custID}}}></Redirect>:""}
       </div>
     )
   }

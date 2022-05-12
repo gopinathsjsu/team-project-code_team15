@@ -7,7 +7,7 @@ export default function NavBar() {
     return (
 <Navbar bg="light" expand="lg">
   <Container fluid>
-    <Navbar.Brand href="/">Booking.com</Navbar.Brand>
+    <Navbar.Brand href="#">Booking.com</Navbar.Brand>
     <Navbar.Toggle aria-controls="navbarScroll" />
     <Navbar.Collapse id="navbarScroll">
       <Nav
@@ -39,7 +39,7 @@ export default function NavBar() {
         <Button variant="outline-success">Search</Button>
       </Form> */}
       <a className='d-flex' style={{"cursor":"pointer"}}>Sign In</a>
-      {/* <a className='d-flex' style={{"cursor":"pointer"}}>Bookings</a> */}
+      <a className='d-flex' style={{"cursor":"pointer"}}>Bookings</a>
     </Navbar.Collapse>
   </Container>
 </Navbar>

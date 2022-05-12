@@ -27,6 +27,7 @@ function App() {
           <Route exact path="/Bookings" ><ManageBookings></ManageBookings></Route> 
           <Route exact path="/landing" ><HotelLandingPage></HotelLandingPage></Route>
           <Route exact path = "/Checkout"component = {CheckOutPage} ></Route>
+          <Route exact path = "/Home" component={HomePage}></Route>
           </Switch>
       </Router>
     </div>
