@@ -15,7 +15,7 @@ export default class ManageBookings extends Component {
         // this.setState({list:data})
         console.log("jey")
         axios.get('http://localhost:3001/bookings/1/all').then((res)=>{
-            // console.log(res)
+            console.log(res)
             this.setState({
               list:res.data
             })
@@ -26,6 +26,10 @@ export default class ManageBookings extends Component {
     return (
       <div>
     <NavBar></NavBar>
+         <div><center>
+           <h5 style={{"marginTop":"30px"}}>My Bookings</h5>
+           </center>
+         </div>
          <div className='container-fluid' style={{...this.standardStyle,marginTop:"100px"}}>
          {/* <center> */}
          {this.state.list.map((item,key)=>{
