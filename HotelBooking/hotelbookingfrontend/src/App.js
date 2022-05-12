@@ -21,7 +21,7 @@ function App() {
     <div className="App">
       <Router>
           <Switch>
-          <Route exact path="/" ><HomePage></HomePage></Route>
+          <Route exact path="/" component = {HomePage} ></Route>
           <Route exact path="/Login" ><HotelLogin></HotelLogin></Route>
           <Route exact path="/Register" ><HotelRegistration /> </Route>
           <Route exact path="/Bookings" ><ManageBookings></ManageBookings></Route> 

@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import NavBar from '../NavBar'
 import CheckoutCard from './CheckoutCard'
-
+import CheckoutDialog from './CheckoutDialog'
 export default class CheckOutPage extends Component {
   constructor(props) {
     super(props)
@@ -14,7 +14,7 @@ export default class CheckOutPage extends Component {
       eminitiesTracker: {},
       selectedRooms: [],
       totalPrice: 0,
-
+      BookSuccess:false
     }
   }
   componentDidMount(props) {
@@ -142,8 +142,16 @@ today = mm + '/' + dd + '/' + yyyy;
     rooms:Object.values(this.state.eminitiesTracker),
     checkIn:searchDetails.checkin,
     checkOut:searchDetails.checkout
-  }).then(res=>{console.log(res)})
+  }).then(res=>{console.log(res)
+   this.setState({
+     BookSuccess:true
+   })
+   
+  })
   .catch(err=>{console.log(err)})
+
+
+  
 
  }
 
@@ -188,6 +196,7 @@ today = mm + '/' + dd + '/' + yyyy;
 
           </div>
         </div>
+        {this.state.BookSuccess == true?<CheckoutDialog popen = {true}></CheckoutDialog>:""}
       </div>
 
     )

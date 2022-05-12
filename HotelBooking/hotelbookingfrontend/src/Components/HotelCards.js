@@ -14,7 +14,7 @@ export default function HotelCards(props) {
    
    console.log(props)
    
-   const singleRoom = "https://askqbookindiastorage.blob.core.windows.net/hotelsaandresorts-19177/dc83bb31-9a7b-4ee1-98f4-878909a5d054-preview.jpg"
+   const singleRoom = "https://webbox.imgix.net/images/owvecfmxulwbfvxm/c56a0c0d-8454-431a-9b3e-f420c72e82e3.jpg"
    const DoubleRoom = "https://cdn.traveltripper.io/site-assets/512_855_12327/media/2018-02-27-080006/large_ex-double-2.jpg"
    const DeluxRoom = "https://s7d2.scene7.com/is/image/ritzcarlton/Deluxe%20King-1?$XlargeViewport100pct$"
    
