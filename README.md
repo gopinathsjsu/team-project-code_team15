@@ -6,15 +6,15 @@ team-project-code_team15 created by GitHub Classroom
 1. Sai Abhiram Atluri
 2. Sai Harsha Anirudh Garre
 3. Anuhya Gankidi (015897323)
-4. Manikanta Tanniru
+4. Manikanta Tanniru (015947425)
 
 #### Team Contributions: 
 1. Sai Abhiram Atluri
 2. Sai Harsha Anirudh Garre
 3. Anuhya Gankidi (015897323)
-4. Manikanta Tanniru
+4. Manikanta Tanniru (015947425)
 
-#### git repo: 
+### git repo: 
 https://github.com/gopinathsjsu/team-project-code_team15
 
 #### project board: 
@@ -38,9 +38,21 @@ https://github.com/gopinathsjsu/team-project-code_team15/projects/1
 ##### Architechture Diagram:
 <img width="510" alt="archd" src="https://user-images.githubusercontent.com/28936164/168076194-83dca744-8fc8-46b5-90a1-82120627056a.png">
 
-##### Deployement Diagram:
+##### Deployment Diagram:
 
+![Deployment Diagram](Diagrams/deployment.jpg)
 
 ##### Component Diagram:
 
+
+
+
+
+## How to run the web-app:
+
+* Step 1: Clone the app by command " git clone https://github.com/gopinathsjsu/team-project-code_team15"
+* Step 2: Go to the client directory and install node modules by command "npm i OR npm install"
+* Step 3: Run the client by command "npm start"
+* Step 4: Go to the server directory and install node modules "npm i OR npm install"
+* Step 5: Run the server by command "node app.js"
 
