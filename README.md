@@ -38,8 +38,9 @@ https://github.com/gopinathsjsu/team-project-code_team15/projects/1
 ##### Architechture Diagram:
 <img width="510" alt="archd" src="https://user-images.githubusercontent.com/28936164/168076194-83dca744-8fc8-46b5-90a1-82120627056a.png">
 
-##### Deployement Diagram:
+##### Deployment Diagram:
 
+![Deployment Diagram](Diagram/deployment.jpg)
 
 ##### Component Diagram:
 
