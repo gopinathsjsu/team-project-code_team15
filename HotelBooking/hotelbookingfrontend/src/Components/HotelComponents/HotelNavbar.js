@@ -21,8 +21,11 @@ export default function HotelNavbar() {
           >
             
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
             Avalon Hotels
+          </Typography>
+          <Typography variant="p" component="div" >
+            ADMIN
           </Typography>
           <Button color="inherit">Logout</Button>
         </Toolbar>

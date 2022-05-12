@@ -31,14 +31,19 @@ router.post('/customer/login',async(req,res)=>{
     let {email,pass}=req.body;
     let isAuthenticated=false;
     try{
-        let getLogin=`select email,customerId,password from Customer where email=?`
+        let getLogin=`select customerFname,customerLname,email,customerId,password from Customer where email=?`
         let result=await pool.query(getLogin,[email]);
         let hashpass=result[0][0]?.password
         let custId=result[0][0]?.customerId
         if(hashpass){
             isAuthenticated=await bcrypt.compare(pass,hashpass);
             isAuthenticated?res.status(200) : res.status(403);
-            res.send({ isAuthenticated ,custId})
+            res.send({ 
+                isAuthenticated ,
+                custId,
+                fname:result[0][0]?.customerFname,
+                lname:result[0][0]?.customerLname
+            })
         }else{
             res.status(403).json({ isAuthenticated })
         }
