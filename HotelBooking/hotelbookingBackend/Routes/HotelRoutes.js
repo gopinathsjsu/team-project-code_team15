@@ -9,7 +9,9 @@ router.get("/all",async(req,res)=>{
     res.send(result[0]);
 })
 router.post("/",async (req,res)=>{
-    let query=`insert into Hotels (hotelName,city) values(?,?);select LAST_INSERT_ID();`
-    let result= await pool.query(query,[req.body.hotelName,req.body.city])
+    let {hotelName,city}=req.body;
+    let query=`insert into Hotels (hotelName,city) values(?,?);select LAST_INSERT_ID() as hotelId;`
+    let result= await pool.query(query,[req.body.hotelName,req.body.city]);
+    res.status(200).send({hotelId:result[0][1][0]?.hotelId})
 })
 module.exports=router
