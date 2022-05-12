@@ -15,6 +15,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
+import NavBar from '../../NavBar'
 
 export class HotelRoomsList extends Component {
     constructor(props) {
@@ -95,8 +96,8 @@ export class HotelRoomsList extends Component {
         return (
              
             <div className="container">
-                HotelRoomsList
-                <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+               
+                <div style={{ display: "flex", flexDirection: "row-reverse" }} className="mt-4">
                     <button className='btn-primary' onClick={()=>this.handleAddNewRoom()}>Add new Room</button>
                     <div style={this.space}></div>
                     <button className='btn-primary' onClick={()=>this.handleAddHotel()}>Add New Hotel</button>

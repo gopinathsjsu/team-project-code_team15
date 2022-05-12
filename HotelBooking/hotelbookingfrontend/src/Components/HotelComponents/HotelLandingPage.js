@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import HotelRoomsList from '../HotelComponents/HotelRoomsList'
+import HotelNavbar from './HotelNavbar';
 export default class HotelLandingPage extends Component {
     constructor(props) {
         super(props)
@@ -67,7 +68,9 @@ export default class HotelLandingPage extends Component {
     render() {
         return (
             <div>
+              <HotelNavbar></HotelNavbar>
                 <div className="container-fluid " >
+                    
                     <Typography variant="h4" align="center"> </Typography>
                     <Typography variant="span" display="flex" justifyContent="center"></Typography>
 
