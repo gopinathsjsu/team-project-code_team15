@@ -4,10 +4,10 @@
 
 ## Sprint 1 - 3/17/2022 - 3/23/2022
 
-##### What I did since the last daily scrum:
+#### What I did since the last daily scrum:
 I've done Scrum set up and learnt about the Tech stack
 
-##### What I plan to do today:
+#### What I plan to do today:
 Set Up Scrum Meetings, sheets, etc.
 
 ##### What blockers I have:
