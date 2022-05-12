@@ -28,7 +28,7 @@ https://github.com/gopinathsjsu/team-project-code_team15/projects/1
 3. Search for Rooms at a desired location and date.
 4. Display list of available rooms and amenities.
 5. Book a room with selected amenities.
-6. Proceed to checkout and confirm booking.
+6. Proceed to checkout, include rewards and confirm booking.
 7. View all the bookings.
 8. Edit the booking.
 9. Cancel a booking.
