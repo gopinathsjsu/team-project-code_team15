@@ -3,20 +3,21 @@ import React, { useState, setState } from 'react';
 import '../App.css';
 import NavBar from '../NavBar';
 // import './Register.css';
-
+import axios from 'axios'
 function HotelRegistration() {
 
   // const standardStyle = { 
   //   margin: "0px", padding: "0px" 
   // };
 
-  const [firstName, setFirstName] = "";
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
 
   const handleInputChange = (e) => {
+    
     const { id, value } = e.target;
     if (id === "firstName") {
       setFirstName(value);
@@ -38,9 +39,52 @@ function HotelRegistration() {
 
   const handleSubmit = () => {
     console.log(firstName, lastName, email, password, confirmPassword);
-  }
-  const standardStyle = { margin: "0px", padding: "0px" }
+    if(validate()){
+      axios.post('http://localhost:3001/users/customer/registration', {
+        fname: firstName,
+        lname: lastName,
+        email: email,
+        password: password,
+        phoneNumber: 8877225511
+      }).then((res) => {
+         console.log(res)
+      }).catch(err=>{
+        console.log(err)
+      })
 
+    }
+
+  }
+  const validate =()=>{
+    if(!firstName){
+      alert("Enter Firstname")
+      return false
+    }
+    else if(!lastName){
+      alert("Enter LastName")
+      return false
+    }
+    else if(!email){
+      alert("Enter Email")
+      return false
+  }
+  else if(!password){
+    alert("Enter password")
+    return false
+  }
+  else if(!confirmPassword){
+    alert("Enter password again to confirm")
+    return false
+  }
+  else if(password != confirmPassword){
+    alert("Different values entered in password and confirm password fields")
+    return false
+  }
+  return true
+}
+
+  const standardStyle = { margin: "0px", padding: "0px" }
+  console.log(firstName, lastName, email, password, confirmPassword);
   return (
     <div>
       <NavBar></NavBar>
@@ -52,28 +96,25 @@ function HotelRegistration() {
           <div className='col-md-8' style={standardStyle}>
             <form class="border border-light p-5" style={{ "marginTop": "80px" }}>
 
-              <center><p class="h4 mb-4 ">Register</p></center>
+              <center><p class="h4 mb-4 " onClick={()=>{this.handleSubmit()}}>Register</p></center>
 
-              <input type="text" name="firstName" id="firstName" class="form-control mb-4" placeholder="First Name" />
+              <input type="text" name="firstName" id="firstName" class="form-control mb-4" placeholder="First Name" onChange={(e)=>{handleInputChange(e)}}/>
 
-              <input type="text" id="lastName" class="form-control mb-4" placeholder="Last Name" />
+              <input type="text" id="lastName" class="form-control mb-4" placeholder="Last Name" onChange={(e)=>{handleInputChange(e)}} />
               {/* <input type="text" id="lastName" class="form-control mb-4" placeholder="Last Name" /> */}
-              <input type="email" id='email' class="form-control mb-4" placeholder='Email'></input>
-              <input type="password" class="form-control mb-4" placeholder='Password'></input>
-              <input type="password" class="form-control mb-4" placeholder='Confirm Password'></input>
+              <input type="email" id='email' class="form-control mb-4" placeholder='Email' onChange={(e)=>{handleInputChange(e)}}></input>
+              <input type="password" id='password'  class="form-control mb-4" placeholder='Password' onChange={(e)=>{handleInputChange(e)}}></input>
+              <input type="password" id='confirmPassword'  class="form-control mb-4" placeholder='Confirm Password' onChange={(e)=>{handleInputChange(e)}}></input>
               <div class="d-flex justify-content-between">
                 <div>
-                  {/* <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember" />
-                    <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
-                  </div> */}
+
                 </div>
                 <div>
-                  {/* <a href="">Forgot password?</a> */}
+
                 </div>
               </div>
               <center>
-                <button class="btn btn-info btn-block my-4" type="submit">Register</button>
+                <button class="btn btn-info btn-block my-4" type="button" onClick={()=>{handleSubmit()}}>Register</button>
               </center>
 
 
