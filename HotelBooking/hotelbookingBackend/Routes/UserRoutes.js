@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
  */
  const saltRounds = 5;
 
+
 router.post('/customer/registration',async (req,res)=>{
     let {fname,lname,email,password,phoneNumber}=req.body;
     try{
@@ -63,6 +64,7 @@ router.post("/admin/registration", async(req,res)=>{
         res.status(500).send({msg:`Admin already exists with given email ${email}`});
     }
 })
+
 
 router.post('/admin/login',async(req,res)=>{
     let {email,pass}=req.body;
