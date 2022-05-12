@@ -37,7 +37,7 @@ app.get('/', function (req, res) {
 
 // })
 var port=normalizePort(process.env.PORT || '3001');
-app.listen(process.env.PORT, function () {
+app.listen(port, function () {
   console.log('Server Listening on port '+port);
 });
 app.use("/customer",customerRouter)
