@@ -1,6 +1,8 @@
 import React,{Component} from 'react'
 import NavBar from '../NavBar'
 import { Link, Redirect } from 'react-router-dom';
+import { SERVER_URL } from '../config';
+import axios from 'axios'
 export default class adminLogin extends Component {
 
 
@@ -9,10 +11,45 @@ export default class adminLogin extends Component {
       super(props)
     
       this.state = {
+          Email:"",
+          password:""
          
       }
     }
-
+    onChangeEmail = (e)=>{
+        console.log(e.target.value)
+         this.setState({
+           Email:e.target.value
+         })
+      }
+      onChangePassword = (e)=>{
+        console.log(e.target.value)
+        this.setState({
+            password:e.target.value
+        })
+      }
+    
+      onSubmit = ()=>{
+        console.log("heyy")
+        axios.post(`${SERVER_URL}/users/admin/login`,{
+          email:this.state.Email,
+          pass:this.state.password
+        }).then(res=>{
+          console.log(res)
+          if(res.data.isAuthenticated == true){
+            sessionStorage.setItem("adminId",res.data.adminId)
+            sessionStorage.setItem("isAuthenticated",res.data.isAuthenticated)
+            this.setState({
+                RedirectToAdminHome:true,
+            })
+          }
+           
+        }).catch(err=>{
+          alert("Invalid credentials")
+          console.log(err)
+        })
+      }
+       
 
 
     render(){
@@ -54,7 +91,7 @@ export default class adminLogin extends Component {
             {/* <h5>        
               HotelLogin
             </h5>     */}
-            {this.state.RedirectToAdminHome == true?<Redirect to={{pathname:"/Home", state : {c_id:this.state.custID}}}></Redirect>:""}
+            {this.state.RedirectToAdminHome == true?<Redirect to={{pathname:"/landing"}}></Redirect>:""}
           </div>
           )
 

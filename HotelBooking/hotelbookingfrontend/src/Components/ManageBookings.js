@@ -3,6 +3,7 @@ import NavBar from '../NavBar';
 import BookingsList from './BookingsList';
 import axios from 'axios'
 import { ThemeProvider } from 'react-bootstrap';
+import { SERVER_URL } from '../config';
 export default class ManageBookings extends Component {
     constructor(props) {
       super(props)
@@ -17,13 +18,13 @@ export default class ManageBookings extends Component {
         // this.setState({list:data})
         console.log("jey")
         let c_id = sessionStorage.getItem("c_id")
-        axios.get(`http://localhost:3001/bookings/${c_id}/all`).then((res)=>{
+        axios.get(`${SERVER_URL}/bookings/${c_id}/all`).then((res)=>{
             console.log(res)
             this.setState({
               list:res.data
             })
         })
-        axios.get(`http://localhost:3001/rewards/${c_id}`).then(res=>{
+        axios.get(`${SERVER_URL}/rewards/${c_id}`).then(res=>{
           this.setState({
             rewards:res.data[0].rewards
           })

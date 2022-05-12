@@ -5,6 +5,9 @@ import NavBar from '../NavBar';
 // import './Register.css';
 import axios from 'axios'
 import { Redirect } from 'react-router-dom';
+import { SERVER_URL } from '../config';
+
+
 function HotelRegistration() {
 
   // const standardStyle = { 
@@ -42,7 +45,7 @@ function HotelRegistration() {
   const handleSubmit = () => {
     console.log(firstName, lastName, email, password, confirmPassword);
     if(validate()){
-      axios.post('http://localhost:3001/users/customer/registration', {
+      axios.post(`${SERVER_URL}/users/customer/registration`, {
         fname: firstName,
         lname: lastName,
         email: email,
