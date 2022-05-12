@@ -75,13 +75,7 @@ export default class adminLogin extends Component {
         
                     <button className="btn btn-info btn-block my-4" type="button" onClick={()=>{this.onSubmit()}} >Sign in</button>
         
-                    <div className="text-center">
-                      <p>Not a member?
-                        <a href="/Register">Register</a>
-                      </p>
-        
-        
-                    </div>
+          
                   </form>
                 </div>
                 <div className='col-md-2'></div>

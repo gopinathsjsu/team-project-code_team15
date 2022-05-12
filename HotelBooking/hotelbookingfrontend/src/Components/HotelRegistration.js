@@ -53,6 +53,7 @@ function HotelRegistration() {
         phoneNumber: 8877225511
       }).then((res) => {
          console.log(res)
+         alert("Registration Successfull")
          setRedirect(true)
       }).catch(err=>{
         console.log(err)

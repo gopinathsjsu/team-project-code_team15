@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 export default function NavBar(props) {
   const [myBookingDisplay,setmyBookingDisplay] = useState(props?.myBookingDisplay==false?props?.myBookingDisplay:true)
-  
+  const [name,setName] = useState(props.Name)
   const [redirectToHome,setRedirectToHome] = useState(false)
-    
+  console.log(props)
   const onClickLogout=()=>{
      sessionStorage.clear()
 
@@ -37,7 +37,10 @@ export default function NavBar(props) {
       >
 
       </Nav>
-       {myBookingDisplay==true?<><Link  to = {{pathname:"/Bookings"}}  style={{"cursor":"pointer",textDecoration:"none", "marginRight":"10px"}} >{myBookingDisplay==true?"MyBookings":""}  </Link>
+       
+       {myBookingDisplay==true?<><h9>{props.Name},</h9>
+       <Link  to = {{pathname:"/Bookings"}}  style={{"cursor":"pointer",textDecoration:"none", "marginRight":"10px"}} >{myBookingDisplay==true?"MyBookings":""}  </Link>
+       
        <Link to={{pathname:"/"}} style={{"cursor":"pointer",textDecoration:"none"}} onClick = {()=>{onClickLogout()}}>Logout</Link></>:""}   
       {redirectToHome ==true? <Redirect to={{pathname:"/Home" }}></Redirect>:""}
   

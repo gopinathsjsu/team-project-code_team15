@@ -46,6 +46,7 @@ export default class HotelLogin extends Component {
 
 
         window.sessionStorage.setItem("c_id",res.data.custId)
+        sessionStorage.setItem("c_name",res.data.fname)
         this.setState({
           custID:res.data.custId
         })

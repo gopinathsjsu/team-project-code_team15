@@ -58,6 +58,11 @@ https://github.com/gopinathsjsu/team-project-code_team15/blob/main/Team%20Code%2
 
 ##### Deployment Diagram:
 
+![Deployment diagram](Diagrams/deployment.png)
 
 ##### Component Diagram:
+
+![Component diagram](Diagrams/component.png)
+
+
 

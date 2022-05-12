@@ -10,34 +10,61 @@ export default class ManageBookings extends Component {
     
       this.state = {
          list:[],
-         rewards:0
+         rewards:0,
+         c_name:""
       }
     }
     componentDidMount(){
         // let data=[1,2,3];
         // this.setState({list:data})
         console.log("jey")
-        let c_id = sessionStorage.getItem("c_id")
-        axios.get(`${SERVER_URL}/bookings/${c_id}/all`).then((res)=>{
-            console.log(res)
-            this.setState({
-              list:res.data
-            })
+        // let c_id = sessionStorage.getItem("c_id")
+        // axios.get(`${SERVER_URL}/bookings/${c_id}/all`).then((res)=>{
+        //     console.log(res)
+        //     this.setState({
+        //       list:res.data
+        //     })
+        // })
+        // axios.get(`${SERVER_URL}/rewards/${c_id}`).then(res=>{
+        //   this.setState({
+        //     rewards:res.data[0].rewards
+        //   })
+        // })
+        let c_name = sessionStorage.getItem("c_name")
+        this.setState({
+          c_name:c_name
         })
-        axios.get(`${SERVER_URL}/rewards/${c_id}`).then(res=>{
-          this.setState({
-            rewards:res.data[0].rewards
-          })
-        })
+
+        this.callBookingsUpdate()
     }
+
+  callBookingsUpdate = ()=>{
+    let c_id = sessionStorage.getItem("c_id")
+    axios.get(`${SERVER_URL}/bookings/${c_id}/all`).then((res)=>{
+        console.log(res)
+        this.setState({
+          list:res.data
+        })
+    })
+    axios.get(`${SERVER_URL}/rewards/${c_id}`).then(res=>{
+      this.setState({
+        rewards:res.data[0].rewards
+      })
+    })
+
+  }
+
+
+
+
   standardStyle = { padding: "0px", margin: "0px" }
   render() {
     return (
       <div>
-    <NavBar></NavBar>
+    <NavBar  Name ={this.state.c_name}></NavBar>
          <div><center>
            <h5 style={{"marginTop":"30px"}}>My Bookings</h5><br/>
-           <h6 style={{"marginRight":"580px","marginTop":"10px"}}>Total Rewards :{this.state.rewards}</h6>
+           <h6 style={{"marginRight":"580px","marginTop":"10px"}}>Total Rewards :{this.state.rewards <0?0:this.state.rewards}</h6>
            </center>
          </div>
          <div className='container-fluid' style={{...this.standardStyle,marginTop:"30px"}}>
@@ -50,7 +77,7 @@ export default class ManageBookings extends Component {
                 
                 <div className='col-md-6' style={this.standardStyle}>
                 <center>
-                <BookingsList key = {key} item = {item}></BookingsList>
+                <BookingsList key = {key} item = {item} updateList = {this.callBookingsUpdate}></BookingsList>
                 </center>
                 </div>
                 <div className='col-md-3' style={this.standardStyle}>
