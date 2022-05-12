@@ -40,7 +40,6 @@ https://github.com/gopinathsjsu/team-project-code_team15/projects/1
 
 ##### Deployment Diagram:
 
-![Deployment Diagram](Diagrams/deployment.jpg)
 
 ##### Component Diagram:
 
