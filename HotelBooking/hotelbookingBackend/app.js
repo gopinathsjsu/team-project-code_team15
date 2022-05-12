@@ -36,9 +36,9 @@ app.get('/', function (req, res) {
 //   console.log("Connected")
 
 // })
-
-app.listen(3001, function () {
-  console.log('Server Listening on port 3000');
+var port=normalizePort(process.env.PORT || '3001');
+app.listen(process.env.PORT, function () {
+  console.log('Server Listening on port '+port);
 });
 app.use("/customer",customerRouter)
 app.use('/bookings',bookingsRouter)
@@ -46,3 +46,19 @@ app.use('/search',search)
 app.use('/rooms',roomsRouter)
 app.use('/hotels',hotelsRouter);
 app.use("/rewards",rewardsRouter)
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}

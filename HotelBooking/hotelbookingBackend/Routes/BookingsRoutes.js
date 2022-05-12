@@ -58,6 +58,8 @@ router.post("/",async(req,res)=>{
 router.put("/",async (req,res)=>{
     let {custId,reservationId,newCheckIn,newCheckOut}=req.body
     let result=await pool.query(`select checkInDate,checkOutDate from Reservations where reservationId=?;`,[reservationId]);
+    /**To get no of rooms */
+    let noOfRows=result[0]?.length;
     let {checkInDate,checkOutDate}=result[0][0]||{};
     //Storing string dates
     let newCheckInStr=newCheckIn;
@@ -71,44 +73,73 @@ router.put("/",async (req,res)=>{
     checkOutDate=new Date(checkOutDate);
     //check if dates overlap
     let isOverlap= (checkInDate<newCheckOut) && (newCheckIn<checkOutDate);
+    if(newCheckIn>=newCheckOut)
+        res.status(400).send({msg:"Invalid check in checkout dates"})
+    if(Math.ceil((newCheckOut-newCheckIn) / (1000 * 60 * 60 * 24)) >7){
+        res.status(400).send({msg:"Invalid check in checkout dates, You cannot book for more than 7 days"})
+        }
+    if(newCheckIn<new Date()){
+        res.status(400).send({msg:"Checkin cannot be in past or today, please select a date in future"});
+        }
     console.log(isOverlap);
     let intervalsToCheck=[];
     if(isOverlap){
         if((newCheckIn-checkInDate)<0 ){
             intervalsToCheck.push({
-                start:newCheckIn,
-                end:checkInDate
+                start:newCheckInStr,
+                end:checkInStr
             })
         }
         if((newCheckOut-checkOutDate)>0){
             intervalsToCheck.push({
-                start:checkOutDate,
-                end:newCheckOut
+                start:checkOutStr,
+                end:newCheckOutStr
             })
         }
     }
+    
     if(isOverlap && intervalsToCheck.length==0){
         console.log("new checkin and checout dates can be booked for the same room by updating existing rows")
-        await modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr);
-        res.send({msg:"updated rewards and modified dates"})
+        let newPrice=await modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr);
+        res.send({
+            msg:"updated rewards and modified dates",
+            updatedPrice:newPrice
+        })
     }
     if(isOverlap && intervalsToCheck.length>0){
-        let isAvailable=true
         console.log("check the availability for these intervals for this roomId and if available make reservation by updating dates")
+        let isAvailable=true
         for(let i=0;i<intervalsToCheck.length;i++){
-            isAvailable=isAvailable && await checkAvailability(i.start,i.end)
+            isAvailable=isAvailable && await checkAvailability(intervalsToCheck[i].start,intervalsToCheck[i].end,reservationId,noOfRows)
+            console.log("Is available "+ isAvailable)
         }
         if(isAvailable){
-            await modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr);
+            let newPrice=await modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr);
+            res.send({
+                msg:"updated rewards and modified dates",
+                updatedPrice:newPrice
+            })
         }else{
             //not available
+            res.send({
+                msg:"Cannot modify booking for selected dates"
+            })
         }
         
     }
     if(!isOverlap){
         console.log("check the availability for the newCheckin and checkOut and make a new reservation")
-        await checkAvailability(start,end);
-        await modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr);
+        if(await checkAvailability(newCheckInStr,newCheckOutStr,reservationId,noOfRows)==true){
+            let newPrice=await modifyReservationAndRewards(reservationId, newCheckOut, newCheckIn, newCheckInStr, newCheckOutStr);
+            res.send({
+                msg:"updated rewards and modified dates",
+                updatedPrice:newPrice
+            })
+        }else{
+            res.send({
+                msg:"Cannot modify booking for selected dates"
+            })
+        }
     }
     // res.send(intervalsToCheck);
 
@@ -162,7 +193,17 @@ async function modifyReservationAndRewards(reservationId, newCheckOut, newCheckI
 
     await pool.query(updateReservationsMaster + ';' + updatetimings, [newNoOfDays, newBasePrice, newAmenitiesPrice, newTotalPrice, reservationId, newCheckInStr, newCheckOutStr, reservationId]);
     await updateRewards(customerId, noOfDays, newNoOfDays, roomType, noOfRooms);
+    return newTotalPrice;
 }
-async function  checkAvailability(start,end,reservationId){
-
+async function  checkAvailability(start,end,reservationId,noOfRows){
+    //Here no of rows is no of rooms
+    console.log(start,end,reservationId)
+    let checkAviabilityQuery=`select roomId from Reservations where reservationId=? and roomId not in 
+    (select roomId from Reservations where STR_TO_DATE(?,'%m/%d/%Y') < STR_TO_DATE(checkOutDate,'%m/%d/%Y') and STR_TO_DATE(?,'%m/%d/%Y')> STR_TO_DATE(checkInDate,'%m/%d/%Y'));
+    `
+    let result=await pool.query(checkAviabilityQuery,[reservationId,start,end]);
+    console.log(result[0])
+    let isAvailable=await result[0].length==noOfRows
+    console.log("Inside checkAvailability:"+isAvailable)
+    return isAvailable
 }
