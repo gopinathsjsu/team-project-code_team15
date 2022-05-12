@@ -12,6 +12,7 @@ Set Up Scrum Meetings, sheets, etc.
 
 ### What blockers I have:
 no
+
 --------------------------------------------------------
 
 ## Sprint 2: - 3/24/2022 - 4/30/2022
@@ -24,6 +25,7 @@ Basic Front end set up
 
 ### What blockers I have:
 no
+
 --------------------------------------------------------
 
 ## Sprint 3: - 3/31/2022 - 4/6/2022
@@ -36,6 +38,7 @@ I will start Login Page,Register Page Setup
 
 ### What blockers I have:
 no
+
 --------------------------------------------------------
 
 ## Sprint 4: - 4/7/2022 - 4/13/2022
@@ -49,6 +52,7 @@ I will Workon Checkout Page
 
 ### What blockers I have:
 no
+
 --------------------------------------------------------
 ## Sprint 5: - 4/14/2022 - 4/20/2022
 
@@ -60,6 +64,7 @@ Will work Login API
 
 ### What blockers I have:
 no
+
 --------------------------------------------------------
 
 ## Sprint 6: - 4/21/2022 - 4/27/2022
@@ -72,6 +77,7 @@ Login API integration in frontend
 
 ### What blockers I have:
 no
+
 --------------------------------------------------------
 
 
@@ -85,6 +91,7 @@ DB mock data set up
 
 ### What blockers I have:
 no
+
 --------------------------------------------------------
 
 
@@ -98,4 +105,5 @@ Component integration with db and Test own components
 
 ### What blockers I have:
 no
+
 --------------------------------------------------------
