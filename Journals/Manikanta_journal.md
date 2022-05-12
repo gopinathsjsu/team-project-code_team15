@@ -4,146 +4,98 @@
 
 ## Sprint 1 - 3/17/2022 - 3/23/2022
 
-### What tasks did I work on / complete?
+##### What I did since the last daily scrum:
+I've done Scrum set up and learnt about the Tech stack
 
-Reviewed documents and understand the requirement of project
+##### What I plan to do today:
+Set Up Scrum Meetings, sheets, etc.
 
-### What am I planning to work on next?
-
-Architecture Diagram
-
-### What tasks are blocked waiting on another team member?
-
-No
-
-### XP Core Value
-
-Communication
+##### What blockers I have:
+no
+--------------------------------------------------------
 
 ## Sprint 2: - 3/24/2022 - 4/30/2022
 
-### What tasks did I work on / complete?
+##### What I did since the last daily scrum:
+I have worked on Set Up Scrum Meetings, Burndowncharts,Sprint Tasksheet, etc.
 
-Understood the requirements and updated the architecture diagram.
+##### What I plan to do today:
+Basic Front end set up
 
-### What am I planning to work on next?
-
-Get started with Login and Register Page
-
-### What tasks are blocked waiting on another team member?
-
-No
-
-### XP Core Value
-
-Feedback and Communication
-
+##### What blockers I have:
+no
+--------------------------------------------------------
 
 ## Sprint 3: - 3/31/2022 - 4/6/2022
 
-### What tasks did I work on / complete?
+##### What I did since the last daily scrum:
+I worked on Basic Front end set up, Created ReactApp
 
-Basic Set up of the Login and Register page
+##### What I plan to do today:
+I will start Login Page,Register Page Setup
 
-### What am I planning to work on next?
-
-Login UI
-
-### What tasks are blocked waiting on another team member?
-
-No
-
-### XP Core Value
-
-Respect
+##### What blockers I have:
+no
+--------------------------------------------------------
 
 ## Sprint 4: - 4/7/2022 - 4/13/2022
 
-### What tasks did I work on / complete?
+##### What I did since the last daily scrum:
+Got Started Login Page,Register Page Setup
+Resolve UI conflicts between login & register components CSS
 
-Login UI and Resolved the css conflicts 
+##### What I plan to do today:
+I will Workon Checkout Page
 
-### What am I planning to work on next?
-
-Complete Register and Login page and get started with backend API
-
-### What tasks are blocked waiting on another team member?
-
-No
-
-### XP Core Value
-
-Communication
-
+##### What blockers I have:
+no
+--------------------------------------------------------
 ## Sprint 5: - 4/14/2022 - 4/20/2022
 
-### What tasks did I work on / complete?
+##### What I did since the last daily scrum:
+ I have Worked on Checkout Page
 
-Done with Login register page. Worked on Login API and get orders
+##### What I plan to do today:
+Will work Login API
 
-### What am I planning to work on next?
-
-Booking page UI
-
-### What tasks are blocked waiting on another team member?
-
-No
-
-### XP Core Value
-
-Feedback
+##### What blockers I have:
+no
+--------------------------------------------------------
 
 ## Sprint 6: - 4/21/2022 - 4/27/2022
 
-### What tasks did I work on / complete?
+##### What I did since the last daily scrum:
+I have Done Login API
 
-Booking page and dynamic pricing 
+##### What I plan to do today:
+Login API integration in frontend 
 
-### What am I planning to work on next?
-
-Integrate the Login register page to backend
-
-### What tasks are blocked waiting on another team member?
-
-No
-
-### XP Core Value
-
-Respect
+##### What blockers I have:
+no
+--------------------------------------------------------
 
 
 ## Sprint 7: - 4/28/2022 - 5/4/2022
 
-### What tasks did I work on / complete?
+##### What I did since the last daily scrum:
+I worked on Login API integration with frontend 
 
-Integrate the Login and Register Page
+##### What I plan to do today:
+DB mock data set up
 
-### What am I planning to work on next?
-
-Test the component and resolve any issues
-
-### What tasks are blocked waiting on another team member?
-
-No
-
-### XP Core Value
-
-Feedback and Respect
+##### What blockers I have:
+no
+--------------------------------------------------------
 
 
 ## Sprint 8: - 5/5/2022 - 5/11/2022
 
-### What tasks did I work on / complete?
+##### What I did since the last daily scrum:
+DB mock data Population 
 
-Deployment and testing compoenent
+##### What I plan to do today:
+Component integration with db and Test own components
 
-### What am I planning to work on next?
-
-
-### What tasks are blocked waiting on another team member?
-
-No
-
-### XP Core Value
-
-Communication, Feedback and Respect
+##### What blockers I have:
+no
+--------------------------------------------------------
