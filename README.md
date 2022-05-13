@@ -17,10 +17,10 @@ team-project-code_team15 created by GitHub Classroom
 Feedback and Communication (Weekly status update calls)
 We communicated regularly online and offline. We had status updates twice every week through calls, zoom and whatsapp. 
 
-#### git repo: 
+#### Git repo: 
 https://github.com/gopinathsjsu/team-project-code_team15
 
-#### project board: 
+#### Project board: 
 https://github.com/gopinathsjsu/team-project-code_team15/projects/1
 
 #### Sprint Task Sheet:
