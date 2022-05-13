@@ -40,7 +40,7 @@ export default function CheckoutCard(props) {
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <h5>Room No {props.item.roomNo}</h5>
-          <label for="options">Select additional Eminities to be added</label>
+          <label for="options">Select additional amenities to be added</label>
           <FormGroup name="options"  >
             <FormControlLabel onChange={(e) => { callOnChangeEminities(e) }} control={<Checkbox value="swimmingPool" />} label="Access to Swimming pool" />
             <FormControlLabel onChange={(e) => { callOnChangeEminities(e) }} control={<Checkbox value="breakfast" />} label="Daily Continental Breakfast" />
