@@ -57,14 +57,18 @@ function getPricingBasedOnCheckInDates(basePrice,checkIn,checkOut) {
 }
 function getPricingBasedOnHolidaySeason(basePrice,checkIn,checkOut){
     let increment=0;
+    
+    console.log((checkIn.getDate()>=20 && checkIn.getMonth()==10) || checkIn.getMonth() ==11);
     /**Summer holiday season */
     if([4,5,6].includes(checkIn.getMonth()) || [4,5,6].includes(checkOut.getMonth())){
         increment+=basePrice*0.15;
+    }
     /**Thanksgiving and christmas season */
     if((checkIn.getDate()>=20 && checkIn.getMonth()==10) || checkIn.getMonth() ==11){
         increment+=basePrice*0.25;
+        console.log("inside thanks")
     }
-    }
+    
     return increment;
 }
 function getPricingBasedOnAmenities(diffDays,breakfast,fitnessRoom,swimmingPool,parking,allMeals){
@@ -95,7 +99,7 @@ async function getPricingBasedOnCustomerLoyalty(basePrice,custId){
     }else if(rewards>60 && rewards<= 80){
         decrement= basePrice*0.10;
     }
-    console.log(result[0][0]?.rewards)
+    // console.log(result[0][0]?.rewards)
     return decrement*-1;
 }
 module.exports=router
