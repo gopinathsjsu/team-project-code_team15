@@ -26,6 +26,9 @@ https://github.com/gopinathsjsu/team-project-code_team15/projects/1
 #### Sprint Task Sheet:
 https://github.com/gopinathsjsu/team-project-code_team15/blob/main/Team%20Code%20Sprint%20Sheet.xlsx
 
+#### Project journal:
+https://github.com/gopinathsjsu/team-project-code_team15/tree/main/Journals
+
 #### How to run the web-app:
 
 * Step 1: Clone the app by command " git clone https://github.com/gopinathsjsu/team-project-code_team15"
