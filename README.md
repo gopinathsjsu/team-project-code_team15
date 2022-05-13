@@ -53,7 +53,7 @@ https://github.com/gopinathsjsu/team-project-code_team15/tree/main/Journals
 7. View all the bookings.
 8. Edit the booking.
 9. Cancel a booking.
-10. Hotel can add and update rooms.
+10. Hotel can add new hotel location and add rooms.
 
 #### UI Wireframes:
 https://github.com/gopinathsjsu/team-project-code_team15/tree/main/UI_Wireframes
