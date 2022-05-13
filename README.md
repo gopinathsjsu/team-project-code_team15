@@ -32,10 +32,10 @@ https://github.com/gopinathsjsu/team-project-code_team15
 https://github.com/gopinathsjsu/team-project-code_team15/projects/1
 
 #### Sprint Task Sheet:
-https://github.com/gopinathsjsu/team-project-code_team15/blob/main/Team%20Code%20Sprint%20Sheet.xlsx
+https://github.com/gopinathsjsu/team-project-code_team15/blob/main/Agile%20Documentation/Team%20Code%20Sprint%20Sheet.xlsx
 
 #### Project journal:
-https://github.com/gopinathsjsu/team-project-code_team15/tree/main/Journals
+https://github.com/gopinathsjsu/team-project-code_team15/tree/main/Agile%20Documentation/Journals
 
 #### How to run the web-app:
 
