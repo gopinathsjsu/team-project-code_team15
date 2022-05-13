@@ -84,7 +84,7 @@ router.put("/", async (req, res) => {
         res.status(400).send({ msg: "Invalid check in checkout dates, You cannot book for more than 7 days" })
 
     }
-    if (newCheckIn < new Date()) {
+    if (newCheckIn <= new Date()) {
         isValid = false
         res.status(400).send({ msg: "Checkin cannot be in past or today, please select a date in future" });
     }
