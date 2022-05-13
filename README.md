@@ -63,6 +63,12 @@ https://github.com/gopinathsjsu/team-project-code_team15/blob/main/Agile%20Docum
 9. Cancel a booking.
 10. Hotel can add new hotel location and add rooms.
 
+#### Design Decisions:
+1. We wanted to opt for a simple and minimalistic design for UI to focus on the functionality.
+2. We hosted our MYSQL on AWS RDS. We chose mySQl cause we wanted to enforce the relationships between entities and as most of the data was structured.
+3. For frontend, we used react for faster page load and reload due to virtual DOM.
+4. Node JS for backend for its ability of asynchronous calls and eventloop.
+
 #### UI Wireframes:
 https://github.com/gopinathsjsu/team-project-code_team15/tree/main/UI_Wireframes
 
