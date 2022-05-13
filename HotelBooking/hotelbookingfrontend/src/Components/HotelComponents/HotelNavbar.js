@@ -5,11 +5,23 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import { Link } from 'react-router-dom';
 // import MenuIcon from '@mui/icons-material/Menu';
 
 export default function HotelNavbar() {
+
+
+   
+  const logout = ()=>{
+         
+    sessionStorage.clear()
+    
+ 
+  }
+
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} style={{"height":"48px"}}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -21,13 +33,13 @@ export default function HotelNavbar() {
           >
             
           </IconButton>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Avalon Hotels
           </Typography>
           <Typography variant="p" component="div" >
             ADMIN
           </Typography>
-          <Button color="inherit">Logout</Button>
+          <Link style={{"cursor":"pointer",textDecoration:"none","color":"white"}} to={{pathname:"/"}} onClick = {()=>{logout()}} >Logout</Link>
         </Toolbar>
       </AppBar>
     </Box>

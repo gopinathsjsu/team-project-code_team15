@@ -96,9 +96,9 @@ export class HotelRoomsList extends Component {
         }
         return (
              
-            <div className="container">
+            <div className="container mt sm-3">
                
-                <div style={{ display: "flex", flexDirection: "row-reverse" }} className="mt-4">
+                <div style={{ display: "flex", flexDirection: "row-reverse" }} className="mt-4 mb-5">
                     <button className='btn-primary' onClick={()=>this.handleAddNewRoom()}>Add new Room</button>
                     <div style={this.space}></div>
                     <button className='btn-primary' onClick={()=>this.handleAddHotel()}>Add New Hotel</button>
