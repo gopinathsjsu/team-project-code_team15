@@ -8,10 +8,18 @@ team-project-code_team15 created by GitHub Classroom
 4. Manikanta Tanniru (015947425)
 
 #### Team Contributions: 
-* Abhiram - Frontend: HomePage, NavBar, Search Hotels ; Backend: API's for Homepage, Search, Checkout. 
-* Harsha - Frontend: Rewards, Hotel pages ; Backend: APIs for Manage Rewards, AWS configurations.
-* Anuhya - Frontend: MyBookings, Manage Bookings-Edit,Cancel Reservations; Backend - API's for view bookings, manage bookings
-* Manikanta - Frontend: Login, Registration for Customer, Admin. Backend: DB, mockdata to DB
+* Abhiram - 
+      Frontend: Create HomePage for Customer, Create NavBar on Dashboard, Search for Hotel pages; 
+      Backend: API Implementation for Homepage, Search, Checkout. 
+* Harsha - 
+      Frontend: Create Rewards, Hotel Admin pages ; 
+      Backend: API Implementation for Manage Rewards, AWS configurations.
+* Anuhya - 
+      Frontend:  Create MyBookings page, Handle Manage Bookings-Edit existing Bookings, Cancel Reservations;
+      Backend - API Implementation for view bookings, manage bookings.
+* Manikanta - 
+      Frontend: Create Login, Registration pages for Customer, Admin. 
+      Backend:  Handle DB, mockdata into DB.
 
 #### XP Values:
 Feedback and Communication (Weekly status update calls)
