@@ -20,11 +20,7 @@ CMPE 202- Spring 2022
 * Manikanta - 
       Frontend: Create Login, Registration pages for Customer, Admin. 
       Backend:  Handle DB, mockdata into DB.
-
-#### XP Values:
-Feedback and Communication (Weekly status update calls)
-We communicated regularly online and offline. We had status updates twice every week through calls, zoom and whatsapp. 
-
+      
 #### Git repo: 
 https://github.com/gopinathsjsu/team-project-code_team15
 
@@ -37,8 +33,12 @@ https://github.com/gopinathsjsu/team-project-code_team15/blob/main/Agile%20Docum
 #### Project journal:
 https://github.com/gopinathsjsu/team-project-code_team15/tree/main/Agile%20Documentation/Journals
 
-#### How to run the web-app:
+#### XP Values:
+Feedback and Communication (Weekly status update calls)
+We communicated regularly online and offline. We had status updates twice every week through calls, zoom and whatsapp. 
+https://github.com/gopinathsjsu/team-project-code_team15/blob/main/Agile%20Documentation/XPValues.md
 
+#### How to run the web-app:
 * Step 1: Clone the app by command " git clone https://github.com/gopinathsjsu/team-project-code_team15"
 * Step 2: Go to the client directory and install node modules by command "npm i OR npm install"
 * Step 3: Run the client by command "npm start"
