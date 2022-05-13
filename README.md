@@ -55,6 +55,9 @@ https://github.com/gopinathsjsu/team-project-code_team15/tree/main/Journals
 9. Cancel a booking.
 10. Hotel can add and update rooms.
 
+#### UI Wireframes:
+https://github.com/gopinathsjsu/team-project-code_team15/tree/main/UI_Wireframes
+
 #### Diagrams:
 ##### Architechture Diagram:
 <img width="510" alt="archd" src="https://user-images.githubusercontent.com/28936164/168076194-83dca744-8fc8-46b5-90a1-82120627056a.png">
